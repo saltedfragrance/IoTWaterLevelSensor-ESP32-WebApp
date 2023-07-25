@@ -1,0 +1,42 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager navManager
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudDrawer Anchor="Anchor.Top" Variant="@DrawerVariant.Mini">
+        <MudNavMenu>
+            <MudNavLink Class="mb-7 mt-5" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.WaterDrop" @onclick="() => WaterTanksPage()">Home</MudNavLink>
+            <MudNavLink Class="mb-7" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.BarChart" @onclick="() => StatsPage()">Home</MudNavLink>
+            <MudNavLink Class="mb-7" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" @onclick="() => CalendarPage()">Home</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+@code {
+    bool _drawerOpen = false;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    public void WaterTanksPage()
+    {
+        navManager.NavigateTo("/");
+    }
+
+    public void StatsPage()
+    {
+        navManager.NavigateTo("/stats");
+    }
+
+    public void CalendarPage()
+    {
+        navManager.NavigateTo("/calendar");
+    }
+}
