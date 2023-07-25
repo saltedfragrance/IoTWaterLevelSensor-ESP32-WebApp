@@ -1,21 +1,20 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Ipr.WaterSensor.Server.Services;
+using Microsoft.AspNetCore.Components;
+using MQTTnet.Server;
 
 namespace Ipr.WaterSensor.Server.Pages
 {
     public partial class Index : ComponentBase
     {
+        [Inject]
+        public MQTTService MQTTService { get; set; } = default!;
+
         public const int waterTankHeight = 400;
         public int CurrentMeasurementCm { get; set; }
         public int CurrentWaterLevelCm { get; set; }
-
-        public Index()
+        private void CalculateWaterLevel()
         {
-            CurrentWaterLevelCm = CalculateWaterLevel();
-        }
-
-        private int CalculateWaterLevel()
-        {
-            return waterTankHeight - CurrentMeasurementCm;
+            CurrentWaterLevelCm =  waterTankHeight - CurrentMeasurementCm;
         }
     }
 }

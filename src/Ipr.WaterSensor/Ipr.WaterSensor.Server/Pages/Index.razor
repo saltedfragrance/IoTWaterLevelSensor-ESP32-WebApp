@@ -2,3 +2,19 @@
 @layout TopMenuLayout
 
 <PageTitle>Index</PageTitle>
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        if (!MQTTService.BrokerStarted)
+        {
+            await MQTTService.StartBroker();
+        }
+        if (!MQTTService.ClientStarted)
+        {
+            await MQTTService.StartClient();
+        }
+
+        CalculateWaterLevel();
+    }
+}
