@@ -6,11 +6,11 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudDrawer Anchor="Anchor.Top" Variant="@DrawerVariant.Mini">
+    <MudDrawer Elevation="4" Anchor="Anchor.Top" Variant="@DrawerVariant.Mini">
         <MudNavMenu>
-            <MudNavLink Class="mb-7 mt-5" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.WaterDrop" @onclick="() => WaterTanksPage()">Home</MudNavLink>
-            <MudNavLink Class="mb-7" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.BarChart" @onclick="() => StatsPage()">Home</MudNavLink>
-            <MudNavLink Class="mb-7" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" @onclick="() => CalendarPage()">Home</MudNavLink>
+            <MudNavLink Class="mb-7 mt-5" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.WaterDrop" IconColor="Color.Info" @onclick="() => WaterTanksPage()">Home</MudNavLink>
+            <MudNavLink Class="mb-7" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.BarChart" IconColor="Color.Primary" @onclick="() => StatsPage()">Home</MudNavLink>
+            <MudNavLink Class="mb-7" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Tertiary" @onclick="() => CalendarPage()">Home</MudNavLink>
         </MudNavMenu>
     </MudDrawer>
     <MudMainContent>

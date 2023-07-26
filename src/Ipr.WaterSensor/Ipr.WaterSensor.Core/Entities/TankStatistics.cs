@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Ipr.WaterSensor.Core.Entities
 {
-    internal class TankStatistics
+    public class TankStatistics
     {
+        public int TotalWaterCollected { get; set; }
+        public int TotalWaterDispensed { get; set; }
     }
 }
