@@ -9,7 +9,7 @@ namespace Ipr.WaterSensor.Server.Services
     public class MQTTService
     {
         private const string broker = "u325aca1.ala.us-east-1.emqxsl.com";
-        private const int port =8883;
+        private const int port = 8883;
         private const string topic = "watersensor";
         private string clientId = Guid.NewGuid().ToString();
         private const string username = "watersensor_receive";
@@ -23,10 +23,9 @@ namespace Ipr.WaterSensor.Server.Services
             var mqttClient = factory.CreateMqttClient();
 
             var options = new MqttClientOptionsBuilder()
-           .WithTcpServer(broker, port) 
+           .WithTcpServer(broker, port)
            .WithCredentials(username, password)
            .WithClientId(clientId)
-           .WithCleanSession()
            .WithCleanSession()
             .WithTls(
                 o =>
@@ -41,7 +40,7 @@ namespace Ipr.WaterSensor.Server.Services
 
             var connectResult = await mqttClient.ConnectAsync(options);
 
-            if(connectResult.ResultCode == MqttClientConnectResultCode.Success)
+            if (connectResult.ResultCode == MqttClientConnectResultCode.Success)
             {
                 ClientStarted = true;
             }

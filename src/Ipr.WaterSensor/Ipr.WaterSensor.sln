@@ -5,6 +5,10 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ipr.WaterSensor.Server", "Ipr.WaterSensor.Server\Ipr.WaterSensor.Server.csproj", "{11B71B58-9468-4ED6-B211-917D607AA8EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ipr.WaterSensor.Core", "Ipr.WaterSensor.Core\Ipr.WaterSensor.Core.csproj", "{5AB0756C-B699-4B89-89AF-B4875FD6E9C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ipr.WaterSensor.Infrastructure", "Ipr.WaterSensor.Infrastructure\Ipr.WaterSensor.Infrastructure.csproj", "{7C0A803E-A401-4CA6-89D8-A1FEBE244C98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{11B71B58-9468-4ED6-B211-917D607AA8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11B71B58-9468-4ED6-B211-917D607AA8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11B71B58-9468-4ED6-B211-917D607AA8EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AB0756C-B699-4B89-89AF-B4875FD6E9C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AB0756C-B699-4B89-89AF-B4875FD6E9C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AB0756C-B699-4B89-89AF-B4875FD6E9C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AB0756C-B699-4B89-89AF-B4875FD6E9C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C0A803E-A401-4CA6-89D8-A1FEBE244C98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C0A803E-A401-4CA6-89D8-A1FEBE244C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C0A803E-A401-4CA6-89D8-A1FEBE244C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C0A803E-A401-4CA6-89D8-A1FEBE244C98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
