@@ -1,6 +1,5 @@
 ﻿using Ipr.WaterSensor.Server.Services;
 using Microsoft.AspNetCore.Components;
-using MQTTnet.Server;
 
 namespace Ipr.WaterSensor.Server.Pages
 {

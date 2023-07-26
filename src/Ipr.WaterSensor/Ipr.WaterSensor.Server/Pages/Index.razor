@@ -6,17 +6,9 @@
 @code{
     protected override async Task OnInitializedAsync()
     {
-        if (!MQTTService.BrokerStarted)
-        {
-            await MQTTService.StartBroker();
-        }
         if (!MQTTService.ClientStarted)
         {
             await MQTTService.StartClient();
         }
-
-        await MQTTService.CheckForMessage();
-
-        CalculateWaterLevel();
     }
 }

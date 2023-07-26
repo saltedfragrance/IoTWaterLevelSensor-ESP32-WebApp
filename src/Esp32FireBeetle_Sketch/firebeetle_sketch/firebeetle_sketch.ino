@@ -31,7 +31,7 @@ const char* ca_cert= \
 
 //meting variabelen
 long duration;
-int distance;
+float distance;
 
 //wifi verbinding
 const char *ssid = "Home 2.4ghz";
@@ -43,7 +43,7 @@ PubSubClient client(espClient);
 const char *mqtt_broker = "u325aca1.ala.us-east-1.emqxsl.com";
 const char *topic = "watersensor";
 const char *mqtt_username = "watersensor_publish";
-const char *mqtt_password = "blabla";
+const char *mqtt_password = "8768678347474";
 const int mqtt_port = 8883;
 
 void setup(){
@@ -93,9 +93,11 @@ void connectWiFi(){
 }
 
 void sendMeasurement(){
+  String sensorValue_str;
+  char sensorValue[50];
+
   espClient.setCACert(ca_cert);
   client.setServer(mqtt_broker, mqtt_port);
-  client.setCallback(callback);
   while (!client.connected()) {
       String client_id = "watersensor_publish";
       Serial.printf("The client %s connects to the public mqtt broker\n", client_id.c_str());
@@ -107,21 +109,15 @@ void sendMeasurement(){
           delay(2000);
       }
   }
+  
+  sensorValue_str = String(distance);
+  sensorValue_str.toCharArray(sensorValue, sensorValue_str.length() + 1);
 
-  const char *theDistance = (const char *)distance;
-  client.publish(topic, "theDistance"); // publish to the topic-
+  Serial.println(sensorValue);
+  Serial.println(sensorValue_str);
+
+  client.publish(topic, sensorValue); // publish to the topic-
   client.subscribe(topic);
-}
-
-void callback(char *topic, byte *payload, unsigned int length) {
-    Serial.print("Message arrived in topic: ");
-    Serial.println(topic);
-    Serial.print("Message:");
-    for (int i = 0; i < length; i++) {
-        Serial.print((char) payload[i]);
-    }
-    Serial.println();
-    Serial.println("-----------------------");
 }
 
 void loop(){
