@@ -15,8 +15,7 @@ namespace Ipr.WaterSensor.Server.Services
         public async Task StartBroker()
         {
             var options = new MqttServerOptionsBuilder()
-                .WithDefaultEndpoint()
-                .WithDefaultEndpointPort(1883).Build();
+                .WithDefaultEndpoint().WithDefaultEndpointPort(1883).Build();
 
             MQTTBroker = new MqttFactory().CreateMqttServer(options);
             await MQTTBroker.StartAsync();
