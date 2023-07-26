@@ -13,5 +13,6 @@ namespace Ipr.WaterSensor.Core.Entities
         public int Width { get; set; }
         public int CubicMeters { get; set; }
         public int Liters { get; set; }
+        public TankStatistics Statistics { get; set; }
     }
 }
