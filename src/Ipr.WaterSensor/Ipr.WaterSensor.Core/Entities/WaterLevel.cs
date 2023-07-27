@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ipr.WaterSensor.Core.Entities.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Ipr.WaterSensor.Core.Entities
 {
-    internal class WaterLevel
+    public class WaterLevel : BaseEntity
     {
+        public int WaterLevelInMeters { get; set; }
+        public DateTime DateTimeMeasured { get; set; }
     }
 }
