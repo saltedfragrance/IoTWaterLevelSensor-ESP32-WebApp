@@ -27,6 +27,5 @@ namespace Ipr.WaterSensor.Server.Pages
             var pixels = (210 -(percentage * 2) - 35).ToString() + "px";
             return pixels;
         }
-
     }
 }
