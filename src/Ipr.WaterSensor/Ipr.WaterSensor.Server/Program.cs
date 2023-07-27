@@ -13,7 +13,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 builder.Services.AddSingleton<MQTTService>();
-
 builder.Services.AddDbContextFactory<WaterSensorDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
 
 var app = builder.Build();

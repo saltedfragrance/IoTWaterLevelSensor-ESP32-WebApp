@@ -3,15 +3,27 @@
 
 <PageTitle>Niveau</PageTitle>
 
-<MudPaper Width="100%" Elevation="0" >
-    <MudContainer MaxWidth="MaxWidth.Medium">
-        <MudStack Row="false">
-            <MudPaper Class="pa-5" Elevation="2">
+@if (Tanks != null)
+{
+    <MudPaper Width="100%" Elevation="0">
+        <MudContainer MaxWidth="MaxWidth.Medium">
+            <MudStack Row="false">
+                @foreach (var waterTank in Tanks)
+                {
+                    <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="2">
+                        <MudStack Row="false">
+                            <MudText Typo="Typo.h3" Align="Align.Center">@waterTank.CurrentWaterLevel.Percentage %</MudText>
+                            <div class="waterTank" style="--waterLevel:@GetWaterLevelPixels(waterTank.CurrentWaterLevel.Percentage)">
 
-            </MudPaper>
-        </MudStack>
-    </MudContainer>
-</MudPaper>
+                            </div>
+                        </MudStack>
+                    </MudPaper>
+                }
+            </MudStack>
+        </MudContainer>
+    </MudPaper>
+}
+
 
 @code{
     protected override async Task OnInitializedAsync()
@@ -20,8 +32,6 @@
         {
             await MQTTService.StartClient();
         }
-
         await GetTanksData();
     }
-
 }

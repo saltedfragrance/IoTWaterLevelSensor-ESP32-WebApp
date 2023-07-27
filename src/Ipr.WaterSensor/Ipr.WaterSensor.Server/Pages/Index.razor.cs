@@ -14,7 +14,6 @@ namespace Ipr.WaterSensor.Server.Pages
         [Inject]
         protected IDbContextFactory<WaterSensorDbContext> DbContextFactory { get; set; } = default!;
         public List<WaterTank> Tanks { get; set; } = default!;
-
         private async Task GetTanksData()
         {
             using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
@@ -22,5 +21,12 @@ namespace Ipr.WaterSensor.Server.Pages
                 Tanks = await context.WaterTanks.Include(x => x.CurrentWaterLevel).ToListAsync();
             }
         }
+
+        private string GetWaterLevelPixels(int percentage)
+        {
+            var pixels = (210 -(percentage * 2) - 35).ToString() + "px";
+            return pixels;
+        }
+
     }
 }
