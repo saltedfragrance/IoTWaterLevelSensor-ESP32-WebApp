@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ipr.WaterSensor.Core.Entities
 {
-    public class TankStatistics
+    internal class WaterLevel
     {
-        //3 tabs per dag maand jaar 
-        public int TotalWaterCollected { get; set; }
-        public int TotalWaterDispensed { get; set; }
     }
 }
