@@ -41,7 +41,7 @@ const char *password = "Telenet12345.";
 WiFiClientSecure espClient;
 PubSubClient client(espClient);
 const char *mqtt_broker = "u325aca1.ala.us-east-1.emqxsl.com";
-const char *topic = "watersensor";
+const char *topic = "watersensor_main_tank";
 const char *mqtt_username = "watersensor_publish";
 const char *mqtt_password = "8768678347474";
 const int mqtt_port = 8883;

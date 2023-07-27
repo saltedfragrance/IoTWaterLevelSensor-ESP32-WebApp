@@ -1,5 +1,9 @@
-﻿using Ipr.WaterSensor.Server.Services;
+﻿using Ipr.WaterSensor.Core.Entities;
+using Ipr.WaterSensor.Infrastructure.Data;
+using Ipr.WaterSensor.Server.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Ipr.WaterSensor.Server.Pages
 {
@@ -7,13 +11,16 @@ namespace Ipr.WaterSensor.Server.Pages
     {
         [Inject]
         public MQTTService MQTTService { get; set; } = default!;
+        [Inject]
+        protected IDbContextFactory<WaterSensorDbContext> DbContextFactory { get; set; } = default!;
+        public List<WaterTank> Tanks { get; set; } = default!;
 
-        public const int waterTankHeight = 400;
-        public int CurrentMeasurementCm { get; set; }
-        public int CurrentWaterLevelCm { get; set; }
-        private void CalculateWaterLevel()
+        private async Task GetTanksData()
         {
-            CurrentWaterLevelCm =  waterTankHeight - CurrentMeasurementCm;
+            using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
+            {
+                Tanks = await context.WaterTanks.Include(x => x.CurrentWaterLevel).ToListAsync();
+            }
         }
     }
 }

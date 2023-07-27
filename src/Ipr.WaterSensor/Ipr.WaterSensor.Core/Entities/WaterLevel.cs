@@ -9,7 +9,7 @@ namespace Ipr.WaterSensor.Core.Entities
 {
     public class WaterLevel : BaseEntity
     {
-        public int WaterLevelInMeters { get; set; }
+        public int Percentage { get; set; }
         public DateTime DateTimeMeasured { get; set; }
     }
 }

@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Ipr.WaterSensor.Infrastructure.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class WaterSensorDbContext : DbContext
     {
         public DbSet<WaterTank> WaterTanks { get; set; }
         public DbSet<TankStatistics> TankStatistics { get; set; }
         public DbSet<WaterLevel> WaterLevels { get; set; }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :
+        public WaterSensorDbContext(DbContextOptions<WaterSensorDbContext> options) :
             base(options)
         {
         }

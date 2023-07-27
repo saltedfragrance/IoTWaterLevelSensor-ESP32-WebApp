@@ -10,11 +10,13 @@ namespace Ipr.WaterSensor.Server.Services
     {
         private const string broker = "u325aca1.ala.us-east-1.emqxsl.com";
         private const int port = 8883;
-        private const string topic = "watersensor";
+        private const string topicMainTank = "watersensor_main_tank";
+        private const string topicSecondaryTank = "watersensor_secondary_tank";
         private string clientId = Guid.NewGuid().ToString();
         private const string username = "watersensor_receive";
         private const string password = "45745737444568745";
-        public string MeasuredValue { get; set; }
+        public int MeasuredValueMainTank { get; set; }
+        public int MeasuredValueSecondaryTank { get; set; }
         public bool ClientStarted { get; set; }
 
         public async Task StartClient()
@@ -50,7 +52,8 @@ namespace Ipr.WaterSensor.Server.Services
 
         private async Task Subscribe(IMqttClient mqttClient)
         {
-            await mqttClient.SubscribeAsync(topic);
+            await mqttClient.SubscribeAsync(topicMainTank);
+            await mqttClient.SubscribeAsync(topicSecondaryTank);
 
             mqttClient.ApplicationMessageReceivedAsync += e =>
             {
@@ -61,7 +64,14 @@ namespace Ipr.WaterSensor.Server.Services
 
         private void client_MqttMsgPublishReceived(object sender, MqttApplicationMessageReceivedEventArgs e)
         {
-            MeasuredValue = System.Text.Encoding.Default.GetString(e.ApplicationMessage.Payload);
+            if (e.ApplicationMessage.Topic == "watersensor_main_tank")
+            {
+                MeasuredValueMainTank = int.Parse(System.Text.Encoding.Default.GetString(e.ApplicationMessage.Payload));
+            }
+            else if (e.ApplicationMessage.Topic == "watersensor_secondary_tank")
+            {
+                MeasuredValueSecondaryTank = int.Parse(System.Text.Encoding.Default.GetString(e.ApplicationMessage.Payload));
+            }
         }
     }
 }
