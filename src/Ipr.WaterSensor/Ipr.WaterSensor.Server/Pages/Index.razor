@@ -7,6 +7,10 @@
 {
     <MudPaper Width="100%" Elevation="0">
         <MudContainer MaxWidth="MaxWidth.Medium">
+            @if (FireBeetleDevice != null)
+            {
+                <BatteryIndicator BatteryPercentage="@FireBeetleDevice.BatteryPercentage"></BatteryIndicator>
+            }
             <MudStack Row="false">
                 @foreach (var waterTank in Tanks)
                 {
@@ -33,6 +37,6 @@
         {
             await MQTTService.StartClient();
         }
-        await GetTanksData();
+        await GetData();
     }
 }

@@ -8,9 +8,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ipr.WaterSensor.Server", "I
 		{5AB0756C-B699-4B89-89AF-B4875FD6E9C7} = {5AB0756C-B699-4B89-89AF-B4875FD6E9C7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ipr.WaterSensor.Core", "Ipr.WaterSensor.Core\Ipr.WaterSensor.Core.csproj", "{5AB0756C-B699-4B89-89AF-B4875FD6E9C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ipr.WaterSensor.Core", "Ipr.WaterSensor.Core\Ipr.WaterSensor.Core.csproj", "{5AB0756C-B699-4B89-89AF-B4875FD6E9C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ipr.WaterSensor.Infrastructure", "Ipr.WaterSensor.Infrastructure\Ipr.WaterSensor.Infrastructure.csproj", "{7C0A803E-A401-4CA6-89D8-A1FEBE244C98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ipr.WaterSensor.Infrastructure", "Ipr.WaterSensor.Infrastructure\Ipr.WaterSensor.Infrastructure.csproj", "{7C0A803E-A401-4CA6-89D8-A1FEBE244C98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

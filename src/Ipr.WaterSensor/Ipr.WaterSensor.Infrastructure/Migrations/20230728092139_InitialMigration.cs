@@ -14,6 +14,19 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "FireBeetleDevice",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BatteryPercentage = table.Column<int>(type: "int", nullable: false),
+                    DateTimeMeasured = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FireBeetleDevice", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TankStatistics",
                 columns: table => new
                 {
@@ -69,12 +82,17 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "FireBeetleDevice",
+                columns: new[] { "Id", "BatteryPercentage", "DateTimeMeasured" },
+                values: new object[] { new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"), 67, new DateTime(2023, 7, 28, 11, 21, 39, 311, DateTimeKind.Local).AddTicks(5652) });
+
+            migrationBuilder.InsertData(
                 table: "WaterLevels",
                 columns: new[] { "Id", "DateTimeMeasured", "Percentage" },
                 values: new object[,]
                 {
-                    { new Guid("74169af9-72b7-4313-971a-c96307b84fc9"), new DateTime(2023, 7, 27, 19, 40, 11, 639, DateTimeKind.Local).AddTicks(6039), 90 },
-                    { new Guid("fe59d3ff-d8f5-43d4-8a0f-4a6e3976c8db"), new DateTime(2023, 7, 27, 19, 40, 11, 639, DateTimeKind.Local).AddTicks(6065), 45 }
+                    { new Guid("74169af9-72b7-4313-971a-c96307b84fc9"), new DateTime(2023, 7, 28, 11, 21, 39, 311, DateTimeKind.Local).AddTicks(5590), 90 },
+                    { new Guid("fe59d3ff-d8f5-43d4-8a0f-4a6e3976c8db"), new DateTime(2023, 7, 28, 11, 21, 39, 311, DateTimeKind.Local).AddTicks(5630), 45 }
                 });
 
             migrationBuilder.InsertData(
@@ -100,6 +118,9 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "FireBeetleDevice");
+
             migrationBuilder.DropTable(
                 name: "WaterTanks");
 

@@ -21,6 +21,10 @@ namespace Ipr.WaterSensor.Infrastructure.Data.Seeding
             new WaterLevel { Id = Guid.Parse("74169af9-72b7-4313-971a-c96307b84fc9"), DateTimeMeasured = DateTime.Now, Percentage = 90 },
             new WaterLevel { Id = Guid.Parse("fe59d3ff-d8f5-43d4-8a0f-4a6e3976c8db"), DateTimeMeasured = DateTime.Now, Percentage = 45 }
             );
+
+            modelBuilder.Entity<FireBeetle>().HasData(
+            new FireBeetle { Id = Guid.Parse("e7379d81-1f29-494e-81e2-0a313541dd5e"), DateTimeMeasured = DateTime.Now, BatteryPercentage = 67 }
+            );
         }
     }
 }

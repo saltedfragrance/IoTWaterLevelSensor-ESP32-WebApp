@@ -1,0 +1,10 @@
+﻿<MudPaper Class="d-flex justify-content-end" Elevation="0">
+    <MudStack Row="true" Class="align-items-end">
+        <MudChip Variant="Variant.Outlined" Icon="@Icons.Material.Filled.BatteryChargingFull" IconColor="Color.Surface" Color="Color.Info" Size="Size.Small">@BatteryPercentage</MudChip>
+    </MudStack>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public int BatteryPercentage { get; set; }
+}

@@ -4,7 +4,6 @@ using Ipr.WaterSensor.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,11 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ipr.WaterSensor.Infrastructure.Migrations
 {
     [DbContext(typeof(WaterSensorDbContext))]
-    [Migration("20230727174011_InitialMigration")]
-    partial class InitialMigration
+    partial class WaterSensorDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,6 +21,31 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Ipr.WaterSensor.Core.Entities.FireBeetle", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("BatteryPercentage")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTimeMeasured")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FireBeetleDevice");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"),
+                            BatteryPercentage = 67,
+                            DateTimeMeasured = new DateTime(2023, 7, 28, 11, 21, 39, 311, DateTimeKind.Local).AddTicks(5652)
+                        });
+                });
 
             modelBuilder.Entity("Ipr.WaterSensor.Core.Entities.TankStatistics", b =>
                 {
@@ -62,13 +84,13 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("74169af9-72b7-4313-971a-c96307b84fc9"),
-                            DateTimeMeasured = new DateTime(2023, 7, 27, 19, 40, 11, 639, DateTimeKind.Local).AddTicks(6039),
+                            DateTimeMeasured = new DateTime(2023, 7, 28, 11, 21, 39, 311, DateTimeKind.Local).AddTicks(5590),
                             Percentage = 90
                         },
                         new
                         {
                             Id = new Guid("fe59d3ff-d8f5-43d4-8a0f-4a6e3976c8db"),
-                            DateTimeMeasured = new DateTime(2023, 7, 27, 19, 40, 11, 639, DateTimeKind.Local).AddTicks(6065),
+                            DateTimeMeasured = new DateTime(2023, 7, 28, 11, 21, 39, 311, DateTimeKind.Local).AddTicks(5630),
                             Percentage = 45
                         });
                 });

@@ -14,11 +14,13 @@ namespace Ipr.WaterSensor.Server.Pages
         [Inject]
         protected IDbContextFactory<WaterSensorDbContext> DbContextFactory { get; set; } = default!;
         public List<WaterTank> Tanks { get; set; } = default!;
-        private async Task GetTanksData()
+        public FireBeetle FireBeetleDevice { get; set; } = default!;
+        private async Task GetData()
         {
             using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
             {
                 Tanks = await context.WaterTanks.Include(x => x.CurrentWaterLevel).ToListAsync();
+                FireBeetleDevice = await context.FireBeetleDevice.FirstOrDefaultAsync();
             }
         }
 
