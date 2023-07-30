@@ -54,13 +54,9 @@ void setup(){
 
   pinMode(trigPin, OUTPUT); //trigPin als OUTPUT
   pinMode(echoPin, INPUT); //echoPin als INPUT
-
-  doMeasurement();
-  sendMeasurement();
 }
 
 void doMeasurement(){
-  for(int i = 0;i < 2;i++){
     digitalWrite(trigPin, LOW);
     delayMicroseconds(2); 
 
@@ -76,7 +72,6 @@ void doMeasurement(){
     Serial.print(distance);
     Serial.println(" cm");
     delay(1000);
-  }
 }
 
 void connectWiFi(){
@@ -113,12 +108,15 @@ void sendMeasurement(){
   sensorValue_str = String(distance);
   sensorValue_str.toCharArray(sensorValue, sensorValue_str.length() + 1);
 
-  Serial.println(sensorValue);
-  Serial.println(sensorValue_str);
-
-  client.publish(topic, sensorValue); // publish to the topic-
-  client.subscribe(topic);
+  client.publish(topic, sensorValue);
 }
 
 void loop(){
+  doMeasurement();
+  sendMeasurement();
+  delay(60000);
+  if(WiFi.status() != WL_CONNECTED)
+  {
+  connectWiFi();
+  }
 }

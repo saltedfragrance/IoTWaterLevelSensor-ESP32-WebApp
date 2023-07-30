@@ -15,7 +15,7 @@ namespace Ipr.WaterSensor.Server.Services
         private string clientId = Guid.NewGuid().ToString();
         private const string username = "watersensor_receive";
         private const string password = "45745737444568745";
-        public int MeasuredValueMainTank { get; set; }
+        public string MeasuredValueMainTank { get; set; }
         public int MeasuredValueSecondaryTank { get; set; }
         public bool ClientStarted { get; set; }
 
@@ -66,7 +66,7 @@ namespace Ipr.WaterSensor.Server.Services
         {
             if (e.ApplicationMessage.Topic == "watersensor_main_tank")
             {
-                MeasuredValueMainTank = int.Parse(System.Text.Encoding.Default.GetString(e.ApplicationMessage.Payload));
+                MeasuredValueMainTank = System.Text.Encoding.Default.GetString(e.ApplicationMessage.Payload);
             }
             else if (e.ApplicationMessage.Topic == "watersensor_secondary_tank")
             {

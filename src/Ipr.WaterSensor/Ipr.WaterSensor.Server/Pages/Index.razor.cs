@@ -26,8 +26,13 @@ namespace Ipr.WaterSensor.Server.Pages
 
         private string GetWaterLevelPixels(int percentage)
         {
-            var pixels = (210 -(percentage * 2) - 35).ToString() + "px";
+            var pixels = (210 - (percentage * 2) - 35).ToString() + "px";
             return pixels;
+        }
+
+        private void UpdateWaterTankLevel(string newLevel)
+        {
+
         }
     }
 }
