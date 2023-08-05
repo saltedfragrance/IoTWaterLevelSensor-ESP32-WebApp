@@ -1,15 +1,20 @@
 ﻿@page "/calendar"
 @layout TopMenuLayout
 
-<MudPaper Width="100%" Elevation="0">
-    <MudContainer MaxWidth="MaxWidth.Medium">
-        <MudCalendar MonthCellMinHeight="70" Height="50" ShowPrevNextButtons="false" ShowDay="false" ShowMonth="true" ShowWeek="false"></MudCalendar>
-    </MudContainer>
-</MudPaper>
+@if (RainyDays != null)
+{
+    <MudPaper Width="100%" Elevation="0">
+        <MudContainer MaxWidth="MaxWidth.Medium">
+            <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="0">
+                <MudCalendar Items="RainyDays" MonthCellMinHeight="70" Height="50" ShowPrevNextButtons="false" ShowDay="false" ShowMonth="true" ShowWeek="false"></MudCalendar>
+                </MudPaper>
+        </MudContainer>
+    </MudPaper>
+}
 
 @code{
     protected override async Task OnInitializedAsync()
     {
-        await WeatherService.GetData();
+        RainyDays = await WeatherService.GetData();
     }
 }
