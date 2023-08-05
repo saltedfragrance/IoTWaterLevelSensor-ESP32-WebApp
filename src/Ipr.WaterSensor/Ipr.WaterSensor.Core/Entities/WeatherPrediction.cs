@@ -9,9 +9,9 @@ namespace Ipr.WaterSensor.Core.Entities
     public class WeatherPrediction
     {
         public DateTime Date { get; set; }
-        public int Precipitation { get; set; }
-        public int Rain { get; set; }
-        public int Showers { get; set; }
-        public int? PrecipitationProbability { get; set; }
+        public string Precipitation { get; set; }
+        public string Rain { get; set; }
+        public string Showers { get; set; }
+        public string PrecipitationProbability { get; set; }
     }
 }

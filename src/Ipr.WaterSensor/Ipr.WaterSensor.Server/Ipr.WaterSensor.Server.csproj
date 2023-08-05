@@ -20,6 +20,7 @@
     </PackageReference>
     <PackageReference Include="MQTTnet" Version="4.2.1.781" />
     <PackageReference Include="MudBlazor" Version="6.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
