@@ -1,6 +1,7 @@
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h>
+#include <DFRobot_MAX17043.h>
 
 #define trigPin D10
 #define echoPin D11
