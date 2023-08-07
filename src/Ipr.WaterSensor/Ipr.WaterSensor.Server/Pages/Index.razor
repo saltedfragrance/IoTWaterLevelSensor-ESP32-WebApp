@@ -34,6 +34,12 @@
         if (!MQTTService.ClientStarted)
         {
             await MQTTService.StartClient();
+            MQTTService.MqttClient.ApplicationMessageReceivedAsync += e =>
+            {
+                string measuredValue = Encoding.Default.GetString(e.ApplicationMessage.Payload);
+                UpdateWaterTankLevel(measuredValue);
+                return Task.CompletedTask;
+            };
         }
         await GetData();
     }

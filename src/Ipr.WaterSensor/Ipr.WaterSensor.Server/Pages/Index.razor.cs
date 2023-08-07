@@ -3,7 +3,9 @@ using Ipr.WaterSensor.Infrastructure.Data;
 using Ipr.WaterSensor.Server.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using MQTTnet.Client;
 using System;
+using System.Text;
 
 namespace Ipr.WaterSensor.Server.Pages
 {
@@ -30,9 +32,9 @@ namespace Ipr.WaterSensor.Server.Pages
             return pixels;
         }
 
-        private void UpdateWaterTankLevel(string newLevel)
+        private void UpdateWaterTankLevel(string measuredValue)
         {
-
+            
         }
     }
 }
