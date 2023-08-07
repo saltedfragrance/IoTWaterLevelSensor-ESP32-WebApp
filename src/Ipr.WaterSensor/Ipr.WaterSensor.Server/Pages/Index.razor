@@ -5,8 +5,6 @@
 
 @if (Tanks != null)
 {
-    <MudPaper Width="100%" Elevation="0">
-        <MudContainer MaxWidth="MaxWidth.Medium">
             @if (FireBeetleDevice != null)
             {
                 <BatteryIndicator BatteryPercentage="@FireBeetleDevice.BatteryPercentage"></BatteryIndicator>
@@ -25,8 +23,6 @@
                     </MudPaper>
                 }
             </MudStack>
-        </MudContainer>
-    </MudPaper>
     //laatst gemeten
     //mqqt: connected
     //wifi: connected

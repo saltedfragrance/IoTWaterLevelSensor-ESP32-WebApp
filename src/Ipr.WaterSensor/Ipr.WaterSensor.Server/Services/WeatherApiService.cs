@@ -7,9 +7,10 @@ namespace Ipr.WaterSensor.Server.Services
 {
     public class WeatherApiService
     {
-        static readonly HttpClient client = new HttpClient();
+        private static readonly HttpClient client = new HttpClient();
         //1mm = 1 liter water per m²
         public string ApiUrl { get; set; }
+        public List<WeatherPrediction> WeatherData { get; set; }
 
         public WeatherApiService()
         {
@@ -18,7 +19,7 @@ namespace Ipr.WaterSensor.Server.Services
 
         public async Task<List<CalendarItem>> GetData()
         {
-            List<WeatherPrediction> data = new List<WeatherPrediction>();
+            WeatherData = new();
             List<CalendarItem> calItems = new List<CalendarItem>();
 
             using HttpResponseMessage response = await client.GetAsync(ApiUrl);
@@ -27,16 +28,15 @@ namespace Ipr.WaterSensor.Server.Services
 
             for (int i = 0; i < json.Children().ToList()[0].Count(); i++)
             {
-                data.Add(new WeatherPrediction
+                WeatherData.Add(new WeatherPrediction
                 {
                     Date = Convert.ToDateTime(json.Children()[i].ToList()[0]),
                     Precipitation = json.Children()[i].ToList()[1].Value<decimal>(),
                     PrecipitationProbability = json.Children()[i].ToList()[2].Value<string>()
                 });
-
             }
 
-            foreach (var item in data)
+            foreach (var item in WeatherData)
             {
                 var toAdd = new CalendarItem
                 {

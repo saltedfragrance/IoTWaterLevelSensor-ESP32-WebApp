@@ -3,13 +3,15 @@
 
 @if (RainyDays != null)
 {
-    <MudPaper Width="100%" Elevation="0">
-        <MudContainer MaxWidth="MaxWidth.Medium">
-            <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="0">
-                <MudCalendar Items="RainyDays" MonthCellMinHeight="70" Height="50" ShowPrevNextButtons="false" ShowDay="false" ShowMonth="true" ShowWeek="false"></MudCalendar>
-                </MudPaper>
-        </MudContainer>
+    <MudPaper Class=" mt-3 d-flex justify-content-center" Elevation="0">
+        <MudCalendar CellClicked="ToggleRainyDayDetail" ButtonVariant="Variant.Outlined" Color="Color.Surface" HighlightToday="true" Outlined="true" Items="RainyDays" MonthCellMinHeight="70" Height="50" ShowPrevNextButtons="false" ShowDay="false" ShowMonth="true" ShowWeek="false"></MudCalendar>
     </MudPaper>
+}
+
+@if (ToggleDetail)
+{
+    <RainyDayDetail CloseWindow="(() => ToggleDetail = false)"
+                    SelectedDay="SelectedDay"></RainyDayDetail>
 }
 
 @code{
