@@ -34,7 +34,16 @@ namespace Ipr.WaterSensor.Server.Pages
 
         private void UpdateWaterTankLevel(string measuredValue)
         {
-            
+
+        }
+
+        private async Task UpdateBatteryLevel(string measuredValue)
+        {
+            using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
+            {
+                context.FireBeetleDevice.First().BatteryPercentage = measuredValue;
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

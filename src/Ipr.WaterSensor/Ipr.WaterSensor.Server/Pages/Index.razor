@@ -36,8 +36,17 @@
             await MQTTService.StartClient();
             MQTTService.MqttClient.ApplicationMessageReceivedAsync += e =>
             {
-                string measuredValue = Encoding.Default.GetString(e.ApplicationMessage.Payload);
-                UpdateWaterTankLevel(measuredValue);
+                string measurement = Encoding.Default.GetString(e.ApplicationMessage.Payload);
+                if (e.ApplicationMessage.Topic == "watersensor_main_tank")
+                {
+                    UpdateWaterTankLevel(measurement);
+                }
+
+                if (e.ApplicationMessage.Topic == "battery_level")
+                {
+                    UpdateBatteryLevel(measurement);
+                }
+
                 return Task.CompletedTask;
             };
         }
