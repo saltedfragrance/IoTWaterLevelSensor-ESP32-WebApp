@@ -3,7 +3,9 @@ using Ipr.WaterSensor.Infrastructure.Data;
 using Ipr.WaterSensor.Server.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using MQTTnet.Client;
 using System;
+using System.Text;
 
 namespace Ipr.WaterSensor.Server.Pages
 {
@@ -13,13 +15,13 @@ namespace Ipr.WaterSensor.Server.Pages
         public MQTTService MQTTService { get; set; } = default!;
         [Inject]
         protected IDbContextFactory<WaterSensorDbContext> DbContextFactory { get; set; } = default!;
-        public List<WaterTank> Tanks { get; set; } = default!;
+        public WaterTank Tank { get; set; } = default!;
         public FireBeetle FireBeetleDevice { get; set; } = default!;
         private async Task GetData()
         {
             using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
             {
-                Tanks = await context.WaterTanks.Include(x => x.CurrentWaterLevel).ToListAsync();
+                Tank = await context.WaterTanks.Include(x => x.CurrentWaterLevel).FirstOrDefaultAsync();
                 FireBeetleDevice = await context.FireBeetleDevice.FirstOrDefaultAsync();
             }
         }
@@ -30,9 +32,9 @@ namespace Ipr.WaterSensor.Server.Pages
             return pixels;
         }
 
-        private void UpdateWaterTankLevel(string newLevel)
+        private void UpdateWaterTankLevel(string measuredValue)
         {
-
+            
         }
     }
 }

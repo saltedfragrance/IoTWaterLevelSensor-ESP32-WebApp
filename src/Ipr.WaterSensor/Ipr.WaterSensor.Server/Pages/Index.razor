@@ -3,26 +3,25 @@
 
 <PageTitle>Niveau</PageTitle>
 
-@if (Tanks != null)
+@if (Tank != null)
 {
-            @if (FireBeetleDevice != null)
-            {
-                <BatteryIndicator BatteryPercentage="@FireBeetleDevice.BatteryPercentage"></BatteryIndicator>
-            }
-            <MudStack Row="false">
-                @foreach (var waterTank in Tanks)
-                {
-                    <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="2">
-                        <MudStack Row="false" Class="align-items-center">
-                            <MudText Typo="Typo.h6" Align="Align.Center">@waterTank.Name</MudText>
-                            <MudText Typo="Typo.h3" Align="Align.Center">@waterTank.CurrentWaterLevel.Percentage %</MudText>
-                            <div class="waterTank" style="--waterLevel:@GetWaterLevelPixels(waterTank.CurrentWaterLevel.Percentage)">
+    @if (FireBeetleDevice != null)
+    {
+        <BatteryIndicator BatteryPercentage="@FireBeetleDevice.BatteryPercentage"></BatteryIndicator>
+    }
+    <MudStack Row="false">
 
-                            </div>
-                        </MudStack>
-                    </MudPaper>
-                }
+        <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="2">
+            <MudStack Row="false" Class="align-items-center">
+                <MudText Typo="Typo.h6" Align="Align.Center">@Tank.Name</MudText>
+                <MudText Typo="Typo.h3" Align="Align.Center">@Tank.CurrentWaterLevel.Percentage %</MudText>
+                <div class="waterTank" style="--waterLevel:@GetWaterLevelPixels(Tank.CurrentWaterLevel.Percentage)">
+
+                </div>
             </MudStack>
+        </MudPaper>
+
+    </MudStack>
     //laatst gemeten
     //mqqt: connected
     //wifi: connected
@@ -35,6 +34,12 @@
         if (!MQTTService.ClientStarted)
         {
             await MQTTService.StartClient();
+            MQTTService.MqttClient.ApplicationMessageReceivedAsync += e =>
+            {
+                string measuredValue = Encoding.Default.GetString(e.ApplicationMessage.Payload);
+                UpdateWaterTankLevel(measuredValue);
+                return Task.CompletedTask;
+            };
         }
         await GetData();
     }
