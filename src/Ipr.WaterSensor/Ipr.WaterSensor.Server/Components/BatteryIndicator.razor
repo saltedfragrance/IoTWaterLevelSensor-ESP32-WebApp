@@ -1,6 +1,17 @@
 ﻿<MudPaper Class="d-flex justify-content-end" Elevation="0">
     <MudStack Row="true" Class="align-items-end">
-        <MudChip Variant="Variant.Outlined" Icon="@Icons.Material.Filled.BatteryChargingFull" IconColor="Color.Surface" Color="Color.Info" Size="Size.Small">@BatteryPercentage</MudChip>
+        @if (float.Parse(BatteryPercentage) < 20)
+        {
+            <MudChip Variant="Variant.Outlined" Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Error" Color="Color.Error" Size="Size.Small">@BatteryPercentage%</MudChip>
+        }
+        else if (float.Parse(BatteryPercentage) > 20 && float.Parse(BatteryPercentage) < 50)
+        {
+            <MudChip Variant="Variant.Outlined" Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Warning" Color="Color.Warning" Size="Size.Small">@BatteryPercentage%</MudChip>
+        }
+        else if (float.Parse(BatteryPercentage) > 50)
+        {
+            <MudChip Variant="Variant.Outlined" Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Success" Color="Color.Success" Size="Size.Small">@BatteryPercentage%</MudChip>
+        }
     </MudStack>
 </MudPaper>
 
