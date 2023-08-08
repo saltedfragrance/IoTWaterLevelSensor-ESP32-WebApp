@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ipr.WaterSensor.Infrastructure.Migrations
 {
     [DbContext(typeof(WaterSensorDbContext))]
-    [Migration("20230728092139_InitialMigration")]
+    [Migration("20230808134006_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -31,8 +31,9 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("BatteryPercentage")
-                        .HasColumnType("int");
+                    b.Property<string>("BatteryPercentage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateTimeMeasured")
                         .HasColumnType("datetime2");
@@ -45,8 +46,8 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"),
-                            BatteryPercentage = 67,
-                            DateTimeMeasured = new DateTime(2023, 7, 28, 11, 21, 39, 311, DateTimeKind.Local).AddTicks(5652)
+                            BatteryPercentage = "67",
+                            DateTimeMeasured = new DateTime(2023, 8, 8, 15, 40, 6, 357, DateTimeKind.Local).AddTicks(5465)
                         });
                 });
 
@@ -87,14 +88,8 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("74169af9-72b7-4313-971a-c96307b84fc9"),
-                            DateTimeMeasured = new DateTime(2023, 7, 28, 11, 21, 39, 311, DateTimeKind.Local).AddTicks(5590),
+                            DateTimeMeasured = new DateTime(2023, 8, 8, 15, 40, 6, 357, DateTimeKind.Local).AddTicks(5424),
                             Percentage = 90
-                        },
-                        new
-                        {
-                            Id = new Guid("fe59d3ff-d8f5-43d4-8a0f-4a6e3976c8db"),
-                            DateTimeMeasured = new DateTime(2023, 7, 28, 11, 21, 39, 311, DateTimeKind.Local).AddTicks(5630),
-                            Percentage = 45
                         });
                 });
 
@@ -143,16 +138,6 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                             Liters = 10000,
                             Name = "Main water tank",
                             WaterLevelId = new Guid("74169af9-72b7-4313-971a-c96307b84fc9"),
-                            Width = 2
-                        },
-                        new
-                        {
-                            Id = new Guid("457e0ed4-bf75-4d81-b2ac-063e0247bf58"),
-                            CubicMeters = 8,
-                            Height = 4,
-                            Liters = 10000,
-                            Name = "Secondary water tank",
-                            WaterLevelId = new Guid("fe59d3ff-d8f5-43d4-8a0f-4a6e3976c8db"),
                             Width = 2
                         });
                 });
