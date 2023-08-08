@@ -6,6 +6,7 @@
 #define trigPin D10
 #define echoPin D11
 
+//ssl certificaat voor de mqtt broker
 const char* ca_cert= \
 "-----BEGIN CERTIFICATE-----\n" \
 "MIIDrzCCApegAwIBAgIQCDvgVpBCRrGhdWrJWZHHSjANBgkqhkiG9w0BAQUFADBh\n" \
@@ -30,6 +31,9 @@ const char* ca_cert= \
 "CAUw7C29C79Fv1C5qfPrmAESrciIxpg0X40KPMbp1ZWVbd4=" \
 "-----END CERTIFICATE-----\n";
 
+//batterij module
+DFRobot_MAX17043 FuelGauge;
+
 //meting variabelen
 long duration;
 float distance;
@@ -42,7 +46,8 @@ const char *password = "Telenet12345.";
 WiFiClientSecure espClient;
 PubSubClient client(espClient);
 const char *mqtt_broker = "u325aca1.ala.us-east-1.emqxsl.com";
-const char *topic = "watersensor_main_tank";
+const char *tankLevelTopic = "watersensor_main_tank";
+const char *batteryLevelTopic = "battery_level";
 const char *mqtt_username = "watersensor_publish";
 const char *mqtt_password = "8768678347474";
 const int mqtt_port = 8883;
@@ -50,6 +55,7 @@ const int mqtt_port = 8883;
 void setup(){
   // baudrate snelheid
   Serial.begin(115200);
+  FuelGauge.begin();
 
   connectWiFi();
 
@@ -90,7 +96,10 @@ void connectWiFi(){
 
 void sendMeasurement(){
   String sensorValue_str;
+  String batteryLevel_str;
+  char batteryLevel[50];
   char sensorValue[50];
+  float batteryPercentage = FuelGauge.readPercentage();
 
   espClient.setCACert(ca_cert);
   client.setServer(mqtt_broker, mqtt_port);
@@ -109,7 +118,11 @@ void sendMeasurement(){
   sensorValue_str = String(distance);
   sensorValue_str.toCharArray(sensorValue, sensorValue_str.length() + 1);
 
-  client.publish(topic, sensorValue);
+  batteryLevel_str = String(batteryPercentage);
+  batteryLevel_str.toCharArray(batteryLevel, batteryLevel_str.length() + 1);
+
+  client.publish(batteryLevelTopic, sensorValue);
+  client.publish(tankLevelTopic, sensorValue);
 }
 
 void loop(){
