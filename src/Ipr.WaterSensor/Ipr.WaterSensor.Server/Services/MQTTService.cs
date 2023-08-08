@@ -11,11 +11,11 @@ namespace Ipr.WaterSensor.Server.Services
     {
         private const string broker = "u325aca1.ala.us-east-1.emqxsl.com";
         private const int port = 8883;
-        private const string topicMainTank = "watersensor_main_tank";
-        private const string topicBatteryLevel = "batteryLevel";
         private string clientId = Guid.NewGuid().ToString();
         private const string username = "watersensor_receive";
         private const string password = "45745737444568745";
+        public string topicMainTank = "watersensor_main_tank";
+        public string topicBatteryLevel = "battery_level";
         public string MeasuredValueMainTank { get; set; }
         public string MeasuredValueBattery { get; set; }
         public bool ClientStarted { get; set; }
@@ -49,18 +49,8 @@ namespace Ipr.WaterSensor.Server.Services
                 ClientStarted = true;
             }
 
-            await Subscribe(MqttClient);
-        }
-
-        private async Task Subscribe(IMqttClient mqttClient)
-        {
-            await mqttClient.SubscribeAsync(topicMainTank);
-
-            mqttClient.ApplicationMessageReceivedAsync += e =>
-            {
-                MeasuredValueMainTank = Encoding.Default.GetString(e.ApplicationMessage.Payload);
-                return Task.CompletedTask;
-            };
+            await MqttClient.SubscribeAsync(topicMainTank);
+            await MqttClient.SubscribeAsync(topicBatteryLevel);
         }
     }
 }

@@ -37,12 +37,12 @@
             MQTTService.MqttClient.ApplicationMessageReceivedAsync += e =>
             {
                 string measurement = Encoding.Default.GetString(e.ApplicationMessage.Payload);
-                if (e.ApplicationMessage.Topic == "watersensor_main_tank")
+                if (e.ApplicationMessage.Topic == MQTTService.topicMainTank)
                 {
                     UpdateWaterTankLevel(measurement);
                 }
 
-                if (e.ApplicationMessage.Topic == "battery_level")
+                if (e.ApplicationMessage.Topic == MQTTService.topicBatteryLevel)
                 {
                     UpdateBatteryLevel(measurement);
                 }

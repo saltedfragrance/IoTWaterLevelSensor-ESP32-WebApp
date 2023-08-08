@@ -100,6 +100,9 @@ void sendMeasurement(){
   char batteryLevel[50];
   char sensorValue[50];
   float batteryPercentage = FuelGauge.readPercentage();
+  Serial.print("Battery level: ");
+  Serial.print(batteryPercentage);
+  Serial.println(" %");
 
   espClient.setCACert(ca_cert);
   client.setServer(mqtt_broker, mqtt_port);
@@ -121,14 +124,14 @@ void sendMeasurement(){
   batteryLevel_str = String(batteryPercentage);
   batteryLevel_str.toCharArray(batteryLevel, batteryLevel_str.length() + 1);
 
-  client.publish(batteryLevelTopic, sensorValue);
   client.publish(tankLevelTopic, sensorValue);
+  client.publish(batteryLevelTopic, batteryLevel);
 }
 
 void loop(){
   doMeasurement();
-  sendMeasurement();
-  delay(60000);
+  sendMeasurement();<
+  delay(1800000);
   if(WiFi.status() != WL_CONNECTED)
   {
   connectWiFi();
