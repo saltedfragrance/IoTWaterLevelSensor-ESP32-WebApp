@@ -1,2 +1,22 @@
 ﻿@page "/calendar"
 @layout TopMenuLayout
+
+@if (RainyDays != null)
+{
+    <MudPaper Class=" mt-3 d-flex justify-content-center" Elevation="0">
+        <MudCalendar CellClicked="ToggleRainyDayDetail" ButtonVariant="Variant.Outlined" Color="Color.Surface" HighlightToday="true" Outlined="true" Items="RainyDays" MonthCellMinHeight="70" Height="50" ShowPrevNextButtons="false" ShowDay="false" ShowMonth="true" ShowWeek="false"></MudCalendar>
+    </MudPaper>
+}
+
+@if (ToggleDetail)
+{
+    <RainyDayDetail CloseWindow="(() => ToggleDetail = false)"
+                    SelectedDay="SelectedDay"></RainyDayDetail>
+}
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        RainyDays = await WeatherService.GetData();
+    }
+}

@@ -14,7 +14,11 @@
         </MudNavMenu>
     </MudDrawer>
     <MudMainContent>
-        @Body
+        <MudPaper Width="100%" Elevation="0">
+            <MudContainer MaxWidth="MaxWidth.Medium">
+                @Body
+            </MudContainer>
+        </MudPaper>
     </MudMainContent>
 </MudLayout>
 @code {
