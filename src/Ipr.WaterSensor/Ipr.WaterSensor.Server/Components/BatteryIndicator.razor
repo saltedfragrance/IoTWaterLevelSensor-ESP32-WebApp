@@ -1,14 +1,14 @@
 ﻿<MudPaper Class="d-flex justify-content-end" Elevation="0">
     <MudStack Row="true" Class="align-items-end">
-        @if (float.Parse(BatteryPercentage) < 20)
+        @if (BatteryPercentage < 20)
         {
             <MudChip Variant="Variant.Outlined" Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Error" Color="Color.Error" Size="Size.Small">@BatteryPercentage%</MudChip>
         }
-        else if (float.Parse(BatteryPercentage) > 20 && float.Parse(BatteryPercentage) < 50)
+        else if (BatteryPercentage > 20 && BatteryPercentage < 50)
         {
             <MudChip Variant="Variant.Outlined" Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Warning" Color="Color.Warning" Size="Size.Small">@BatteryPercentage%</MudChip>
         }
-        else if (float.Parse(BatteryPercentage) > 50)
+        else if (BatteryPercentage > 50)
         {
             <MudChip Variant="Variant.Outlined" Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Success" Color="Color.Success" Size="Size.Small">@BatteryPercentage%</MudChip>
         }
@@ -17,5 +17,5 @@
 
 @code {
     [Parameter]
-    public string BatteryPercentage { get; set; }
+    public double BatteryPercentage { get; set; }
 }

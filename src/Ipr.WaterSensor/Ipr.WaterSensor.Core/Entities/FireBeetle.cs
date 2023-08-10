@@ -9,7 +9,7 @@ namespace Ipr.WaterSensor.Core.Entities
 {
     public class FireBeetle : BaseEntity
     {
-        public string BatteryPercentage { get; set; }
+        public double BatteryPercentage { get; set; }
         public DateTime DateTimeMeasured { get; set; }
     }
 }

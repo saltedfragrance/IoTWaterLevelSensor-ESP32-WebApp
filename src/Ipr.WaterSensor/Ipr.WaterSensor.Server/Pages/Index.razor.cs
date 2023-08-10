@@ -26,25 +26,26 @@ namespace Ipr.WaterSensor.Server.Pages
             }
         }
 
-        private string GetWaterLevelPixels(int percentage)
+        private string GetWaterLevelPixels(double percentage)
         {
             var pixels = (210 - (percentage * 2) - 35).ToString() + "px";
             return pixels;
         }
 
-        private void UpdateWaterTankLevel(string measuredValue)
+        private void UpdateWaterTankLevel(double measuredValue)
         {
-            var newVolume = Tank.Radius * ((Tank.Height + 60) - float.Parse(measuredValue));
+            var newVolume = Tank.Radius * ((Tank.Height + 60) - measuredValue);
             using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
             {
                 var newPercentage = (newVolume / Tank.Volume) * 100;
                 var waterLevel = new WaterLevel { DateTimeMeasured = DateTime.Now, Id = Guid.NewGuid(), Percentage = newPercentage };
+                Tank.WaterLevelId = waterLevel.Id;
                 context.Add(waterLevel);
                 context.SaveChanges();
             }
         }
 
-        private async Task UpdateBatteryLevel(string measuredValue)
+        private async Task UpdateBatteryLevel(double measuredValue)
         {
             using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
             {

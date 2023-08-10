@@ -21,7 +21,7 @@ namespace Ipr.WaterSensor.Infrastructure.Data.Seeding
             );
 
             modelBuilder.Entity<FireBeetle>().HasData(
-            new FireBeetle { Id = Guid.Parse("e7379d81-1f29-494e-81e2-0a313541dd5e"), DateTimeMeasured = DateTime.Now, BatteryPercentage = "67" }
+            new FireBeetle { Id = Guid.Parse("e7379d81-1f29-494e-81e2-0a313541dd5e"), DateTimeMeasured = DateTime.Now, BatteryPercentage = 67 }
             );
         }
     }
