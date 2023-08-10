@@ -36,7 +36,7 @@ namespace Ipr.WaterSensor.Server.Services
                 {
                     o.CertificateValidationHandler = _ => true;
                     o.SslProtocol = SslProtocols.Tls12; ;
-                    var certificate = new X509Certificate("emqxsl-ca.crt", "");
+                    var certificate = new X509Certificate("certificates/emqxsl-ca.crt", "");
                     o.Certificates = new List<X509Certificate> { certificate };
                 }
             )

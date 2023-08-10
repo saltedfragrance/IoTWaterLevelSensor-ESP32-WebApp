@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ipr.WaterSensor.Infrastructure.Migrations
 {
     [DbContext(typeof(WaterSensorDbContext))]
-    [Migration("20230808134006_InitialMigration")]
+    [Migration("20230809184936_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         {
                             Id = new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"),
                             BatteryPercentage = "67",
-                            DateTimeMeasured = new DateTime(2023, 8, 8, 15, 40, 6, 357, DateTimeKind.Local).AddTicks(5465)
+                            DateTimeMeasured = new DateTime(2023, 8, 9, 20, 49, 35, 971, DateTimeKind.Local).AddTicks(7829)
                         });
                 });
 
@@ -88,7 +88,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("74169af9-72b7-4313-971a-c96307b84fc9"),
-                            DateTimeMeasured = new DateTime(2023, 8, 8, 15, 40, 6, 357, DateTimeKind.Local).AddTicks(5424),
+                            DateTimeMeasured = new DateTime(2023, 8, 9, 20, 49, 35, 971, DateTimeKind.Local).AddTicks(7764),
                             Percentage = 90
                         });
                 });

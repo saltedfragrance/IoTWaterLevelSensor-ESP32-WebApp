@@ -82,12 +82,12 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "FireBeetleDevice",
                 columns: new[] { "Id", "BatteryPercentage", "DateTimeMeasured" },
-                values: new object[] { new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"), "67", new DateTime(2023, 8, 8, 15, 40, 6, 357, DateTimeKind.Local).AddTicks(5465) });
+                values: new object[] { new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"), "67", new DateTime(2023, 8, 9, 20, 49, 35, 971, DateTimeKind.Local).AddTicks(7829) });
 
             migrationBuilder.InsertData(
                 table: "WaterLevels",
                 columns: new[] { "Id", "DateTimeMeasured", "Percentage" },
-                values: new object[] { new Guid("74169af9-72b7-4313-971a-c96307b84fc9"), new DateTime(2023, 8, 8, 15, 40, 6, 357, DateTimeKind.Local).AddTicks(5424), 90 });
+                values: new object[] { new Guid("74169af9-72b7-4313-971a-c96307b84fc9"), new DateTime(2023, 8, 9, 20, 49, 35, 971, DateTimeKind.Local).AddTicks(7764), 90 });
 
             migrationBuilder.InsertData(
                 table: "WaterTanks",
