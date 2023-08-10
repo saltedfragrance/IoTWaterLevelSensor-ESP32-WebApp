@@ -13,11 +13,21 @@
 
         <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="2">
             <MudStack Row="false" Class="align-items-center">
-                <MudText Typo="Typo.h6" Align="Align.Center">@Tank.Name</MudText>
-                <MudText Typo="Typo.h3" Align="Align.Center">@Tank.CurrentWaterLevel.Percentage %</MudText>
-                <div class="waterTank" style="--waterLevel:@GetWaterLevelPixels(Tank.CurrentWaterLevel.Percentage)">
-
-                </div>
+                <MudText Typo="Typo.h3" Align="Align.Center">@Tank.Name</MudText>
+                @if (CurrentWaterLevelPercentage > 50)
+                {
+                    <MudText Typo="Typo.h4" Align="Align.Center" Color="Color.Success">@CurrentWaterLevelPercentage %</MudText>
+                }
+                else if (CurrentWaterLevelPercentage < 50 && CurrentWaterLevelPercentage > 20)
+                {
+                    <MudText Typo="Typo.h4" Align="Align.Center" Color="Color.Secondary">@CurrentWaterLevelPercentage %</MudText>
+                }
+                else if (CurrentWaterLevelPercentage < 20)
+                {
+                    <MudText Typo="Typo.h4" Align="Align.Center" Color="Color.Error">@CurrentWaterLevelPercentage %</MudText>
+                }
+                <MudText Typo="Typo.h5" Align="Align.Center"><b>@Math.Round(((10000 / 100) * CurrentWaterLevelPercentage), 2)L</b></MudText>
+                <div class="waterTank" style="--waterLevel:@GetWaterLevelPixels(CurrentWaterLevelPercentage)"></div>
             </MudStack>
         </MudPaper>
 

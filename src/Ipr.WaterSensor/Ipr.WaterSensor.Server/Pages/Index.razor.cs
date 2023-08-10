@@ -17,6 +17,7 @@ namespace Ipr.WaterSensor.Server.Pages
         [Inject]
         protected IDbContextFactory<WaterSensorDbContext> DbContextFactory { get; set; } = default!;
         public WaterTank Tank { get; set; } = default!;
+        public double CurrentWaterLevelPercentage { get; set; }
         public FireBeetle FireBeetleDevice { get; set; } = default!;
         private async Task GetData()
         {
@@ -25,6 +26,7 @@ namespace Ipr.WaterSensor.Server.Pages
                 Tank = await context.WaterTanks.Include(x => x.CurrentWaterLevel).FirstOrDefaultAsync();
                 FireBeetleDevice = await context.FireBeetleDevice.FirstOrDefaultAsync();
             }
+            CurrentWaterLevelPercentage = Math.Round(Tank.CurrentWaterLevel.Percentage, 2);
         }
 
         private string GetWaterLevelPixels(double percentage)
