@@ -26,7 +26,7 @@
                 {
                     <MudText Typo="Typo.h4" Align="Align.Center" Color="Color.Error">@CurrentWaterLevelPercentage %</MudText>
                 }
-                <MudText Typo="Typo.h5" Align="Align.Center"><b>@Math.Round(((10000 / 100) * CurrentWaterLevelPercentage), 2)L</b></MudText>
+                <MudText Typo="Typo.h5" Align="Align.Center"><b>@Math.Round((((Tank.Volume * 1000) / 100) * CurrentWaterLevelPercentage), 2)L</b></MudText>
                 <div class="waterTank" style="--waterLevel:@GetWaterLevelPixels(CurrentWaterLevelPercentage)"></div>
             </MudStack>
         </MudPaper>
