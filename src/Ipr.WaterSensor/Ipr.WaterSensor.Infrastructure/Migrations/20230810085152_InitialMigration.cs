@@ -57,9 +57,8 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: false),
-                    Width = table.Column<int>(type: "int", nullable: false),
-                    CubicMeters = table.Column<int>(type: "int", nullable: false),
-                    Liters = table.Column<int>(type: "int", nullable: false),
+                    Radius = table.Column<int>(type: "int", nullable: false),
+                    Volume = table.Column<int>(type: "int", nullable: false),
                     WaterLevelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StatisticsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -82,17 +81,17 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "FireBeetleDevice",
                 columns: new[] { "Id", "BatteryPercentage", "DateTimeMeasured" },
-                values: new object[] { new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"), "67", new DateTime(2023, 8, 9, 20, 49, 35, 971, DateTimeKind.Local).AddTicks(7829) });
+                values: new object[] { new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"), "67", new DateTime(2023, 8, 10, 10, 51, 52, 210, DateTimeKind.Local).AddTicks(6707) });
 
             migrationBuilder.InsertData(
                 table: "WaterLevels",
                 columns: new[] { "Id", "DateTimeMeasured", "Percentage" },
-                values: new object[] { new Guid("74169af9-72b7-4313-971a-c96307b84fc9"), new DateTime(2023, 8, 9, 20, 49, 35, 971, DateTimeKind.Local).AddTicks(7764), 90 });
+                values: new object[] { new Guid("74169af9-72b7-4313-971a-c96307b84fc9"), new DateTime(2023, 8, 10, 10, 51, 52, 210, DateTimeKind.Local).AddTicks(6667), 90 });
 
             migrationBuilder.InsertData(
                 table: "WaterTanks",
-                columns: new[] { "Id", "CubicMeters", "Height", "Liters", "Name", "StatisticsId", "WaterLevelId", "Width" },
-                values: new object[] { new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 8, 4, 10000, "Main water tank", null, new Guid("74169af9-72b7-4313-971a-c96307b84fc9"), 2 });
+                columns: new[] { "Id", "Height", "Name", "Radius", "StatisticsId", "Volume", "WaterLevelId" },
+                values: new object[] { new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 180, "Main water tank", 133, null, 10, new Guid("74169af9-72b7-4313-971a-c96307b84fc9") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_WaterTanks_StatisticsId",

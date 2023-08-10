@@ -44,7 +44,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         {
                             Id = new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"),
                             BatteryPercentage = "67",
-                            DateTimeMeasured = new DateTime(2023, 8, 9, 20, 49, 35, 971, DateTimeKind.Local).AddTicks(7829)
+                            DateTimeMeasured = new DateTime(2023, 8, 10, 10, 51, 52, 210, DateTimeKind.Local).AddTicks(6707)
                         });
                 });
 
@@ -85,7 +85,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("74169af9-72b7-4313-971a-c96307b84fc9"),
-                            DateTimeMeasured = new DateTime(2023, 8, 9, 20, 49, 35, 971, DateTimeKind.Local).AddTicks(7764),
+                            DateTimeMeasured = new DateTime(2023, 8, 10, 10, 51, 52, 210, DateTimeKind.Local).AddTicks(6667),
                             Percentage = 90
                         });
                 });
@@ -96,27 +96,24 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CubicMeters")
-                        .HasColumnType("int");
-
                     b.Property<int>("Height")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Liters")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Radius")
+                        .HasColumnType("int");
+
                     b.Property<Guid?>("StatisticsId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Volume")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("WaterLevelId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -130,12 +127,11 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"),
-                            CubicMeters = 8,
-                            Height = 4,
-                            Liters = 10000,
+                            Height = 180,
                             Name = "Main water tank",
-                            WaterLevelId = new Guid("74169af9-72b7-4313-971a-c96307b84fc9"),
-                            Width = 2
+                            Radius = 133,
+                            Volume = 10,
+                            WaterLevelId = new Guid("74169af9-72b7-4313-971a-c96307b84fc9")
                         });
                 });
 

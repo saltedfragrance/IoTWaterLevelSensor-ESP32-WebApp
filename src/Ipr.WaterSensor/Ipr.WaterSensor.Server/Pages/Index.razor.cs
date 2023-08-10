@@ -34,7 +34,14 @@ namespace Ipr.WaterSensor.Server.Pages
 
         private void UpdateWaterTankLevel(string measuredValue)
         {
-
+            var newVolume = Tank.Radius * ((Tank.Height + 60) - float.Parse(measuredValue));
+            using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
+            {
+                var newPercentage = (newVolume / Tank.Volume) * 100;
+                var waterLevel = new WaterLevel { DateTimeMeasured = DateTime.Now, Id = Guid.NewGuid(), Percentage = newPercentage };
+                context.Add(waterLevel);
+                context.SaveChanges();
+            }
         }
 
         private async Task UpdateBatteryLevel(string measuredValue)

@@ -11,9 +11,8 @@ namespace Ipr.WaterSensor.Core.Entities
     {
         public string Name { get; set; }
         public int Height { get; set; }
-        public int Width { get; set; }
-        public int CubicMeters { get; set; }
-        public int Liters { get; set; }
+        public int Radius { get; set; }
+        public int Volume { get; set; }
         public Guid WaterLevelId { get; set; }
         public WaterLevel? CurrentWaterLevel { get; set; }
         public TankStatistics? Statistics { get; set; }
