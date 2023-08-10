@@ -4,7 +4,7 @@
     width: 150px;
     border: 5px solid black;
     background: url(../images/wave.png);
-    background-size: 300px 230px;
+    background-size: 300px 245px;
     background-repeat: repeat-x;
     animation: flow 5s linear infinite;
 }

@@ -16,7 +16,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BatteryPercentage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BatteryPercentage = table.Column<double>(type: "float", nullable: false),
                     DateTimeMeasured = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -42,7 +42,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Percentage = table.Column<int>(type: "int", nullable: false),
+                    Percentage = table.Column<double>(type: "float", nullable: false),
                     DateTimeMeasured = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -59,7 +59,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                     Height = table.Column<int>(type: "int", nullable: false),
                     Radius = table.Column<int>(type: "int", nullable: false),
                     Volume = table.Column<int>(type: "int", nullable: false),
-                    WaterLevelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CurrentWaterLevelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StatisticsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -71,8 +71,8 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         principalTable: "TankStatistics",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_WaterTanks_WaterLevels_WaterLevelId",
-                        column: x => x.WaterLevelId,
+                        name: "FK_WaterTanks_WaterLevels_CurrentWaterLevelId",
+                        column: x => x.CurrentWaterLevelId,
                         principalTable: "WaterLevels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -81,27 +81,27 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "FireBeetleDevice",
                 columns: new[] { "Id", "BatteryPercentage", "DateTimeMeasured" },
-                values: new object[] { new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"), "67", new DateTime(2023, 8, 10, 10, 51, 52, 210, DateTimeKind.Local).AddTicks(6707) });
+                values: new object[] { new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"), 67.0, new DateTime(2023, 8, 10, 13, 34, 15, 92, DateTimeKind.Local).AddTicks(6836) });
 
             migrationBuilder.InsertData(
                 table: "WaterLevels",
                 columns: new[] { "Id", "DateTimeMeasured", "Percentage" },
-                values: new object[] { new Guid("74169af9-72b7-4313-971a-c96307b84fc9"), new DateTime(2023, 8, 10, 10, 51, 52, 210, DateTimeKind.Local).AddTicks(6667), 90 });
+                values: new object[] { new Guid("74169af9-72b7-4313-971a-c96307b84fc9"), new DateTime(2023, 8, 10, 13, 34, 15, 92, DateTimeKind.Local).AddTicks(6792), 90.0 });
 
             migrationBuilder.InsertData(
                 table: "WaterTanks",
-                columns: new[] { "Id", "Height", "Name", "Radius", "StatisticsId", "Volume", "WaterLevelId" },
-                values: new object[] { new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 180, "Main water tank", 133, null, 10, new Guid("74169af9-72b7-4313-971a-c96307b84fc9") });
+                columns: new[] { "Id", "CurrentWaterLevelId", "Height", "Name", "Radius", "StatisticsId", "Volume" },
+                values: new object[] { new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), new Guid("74169af9-72b7-4313-971a-c96307b84fc9"), 180, "Main water tank", 133, null, 10 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WaterTanks_CurrentWaterLevelId",
+                table: "WaterTanks",
+                column: "CurrentWaterLevelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WaterTanks_StatisticsId",
                 table: "WaterTanks",
                 column: "StatisticsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WaterTanks_WaterLevelId",
-                table: "WaterTanks",
-                column: "WaterLevelId");
         }
 
         /// <inheritdoc />

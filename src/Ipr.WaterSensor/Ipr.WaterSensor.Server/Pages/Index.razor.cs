@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using MQTTnet.Client;
 using System;
+using System.Globalization;
 using System.Text;
 
 namespace Ipr.WaterSensor.Server.Pages
@@ -32,24 +33,30 @@ namespace Ipr.WaterSensor.Server.Pages
             return pixels;
         }
 
-        private void UpdateWaterTankLevel(double measuredValue)
+        private void UpdateWaterTankLevel(string measuredValue)
         {
-            var newVolume = Tank.Radius * ((Tank.Height + 60) - measuredValue);
+            var newVolume = Tank.Radius * ((Tank.Height + 60) - Convert.ToDouble(measuredValue));
             using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
             {
                 var newPercentage = (newVolume / Tank.Volume) * 100;
+
+                if (newPercentage > 100) newPercentage = 100;
+                else if (newPercentage < 0) newPercentage = 0;
+
                 var waterLevel = new WaterLevel { DateTimeMeasured = DateTime.Now, Id = Guid.NewGuid(), Percentage = newPercentage };
-                Tank.WaterLevelId = waterLevel.Id;
+                var tankToUpdate = context.WaterTanks.First(x => x.Id == Tank.Id);
+                tankToUpdate.CurrentWaterLevelId = waterLevel.Id;
                 context.Add(waterLevel);
+                context.Update(tankToUpdate);
                 context.SaveChanges();
             }
         }
 
-        private async Task UpdateBatteryLevel(double measuredValue)
+        private async Task UpdateBatteryLevel(string measuredValue)
         {
             using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
             {
-                context.FireBeetleDevice.First().BatteryPercentage = measuredValue;
+                context.FireBeetleDevice.First().BatteryPercentage = Convert.ToDouble(measuredValue);
                 await context.SaveChangesAsync();
             }
         }

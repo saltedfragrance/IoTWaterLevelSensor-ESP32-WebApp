@@ -36,7 +36,7 @@
             await MQTTService.StartClient();
             MQTTService.MqttClient.ApplicationMessageReceivedAsync += e =>
             {
-                double measurement = double.Parse(Encoding.Default.GetString(e.ApplicationMessage.Payload));
+                var measurement = Encoding.Default.GetString(e.ApplicationMessage.Payload);
                 if (e.ApplicationMessage.Topic == MQTTService.topicMainTank)
                 {
                     UpdateWaterTankLevel(measurement);

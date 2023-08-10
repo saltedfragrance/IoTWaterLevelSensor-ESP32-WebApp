@@ -28,9 +28,8 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BatteryPercentage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("BatteryPercentage")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("DateTimeMeasured")
                         .HasColumnType("datetime2");
@@ -43,8 +42,8 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"),
-                            BatteryPercentage = "67",
-                            DateTimeMeasured = new DateTime(2023, 8, 10, 10, 51, 52, 210, DateTimeKind.Local).AddTicks(6707)
+                            BatteryPercentage = 67.0,
+                            DateTimeMeasured = new DateTime(2023, 8, 10, 13, 34, 15, 92, DateTimeKind.Local).AddTicks(6836)
                         });
                 });
 
@@ -74,8 +73,8 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                     b.Property<DateTime>("DateTimeMeasured")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Percentage")
-                        .HasColumnType("int");
+                    b.Property<double>("Percentage")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -85,8 +84,8 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("74169af9-72b7-4313-971a-c96307b84fc9"),
-                            DateTimeMeasured = new DateTime(2023, 8, 10, 10, 51, 52, 210, DateTimeKind.Local).AddTicks(6667),
-                            Percentage = 90
+                            DateTimeMeasured = new DateTime(2023, 8, 10, 13, 34, 15, 92, DateTimeKind.Local).AddTicks(6792),
+                            Percentage = 90.0
                         });
                 });
 
@@ -94,6 +93,9 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CurrentWaterLevelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Height")
@@ -112,14 +114,11 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                     b.Property<int>("Volume")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("WaterLevelId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("StatisticsId");
+                    b.HasIndex("CurrentWaterLevelId");
 
-                    b.HasIndex("WaterLevelId");
+                    b.HasIndex("StatisticsId");
 
                     b.ToTable("WaterTanks");
 
@@ -127,25 +126,25 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"),
+                            CurrentWaterLevelId = new Guid("74169af9-72b7-4313-971a-c96307b84fc9"),
                             Height = 180,
                             Name = "Main water tank",
                             Radius = 133,
-                            Volume = 10,
-                            WaterLevelId = new Guid("74169af9-72b7-4313-971a-c96307b84fc9")
+                            Volume = 10
                         });
                 });
 
             modelBuilder.Entity("Ipr.WaterSensor.Core.Entities.WaterTank", b =>
                 {
+                    b.HasOne("Ipr.WaterSensor.Core.Entities.WaterLevel", "CurrentWaterLevel")
+                        .WithMany()
+                        .HasForeignKey("CurrentWaterLevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Ipr.WaterSensor.Core.Entities.TankStatistics", "Statistics")
                         .WithMany()
                         .HasForeignKey("StatisticsId");
-
-                    b.HasOne("Ipr.WaterSensor.Core.Entities.WaterLevel", "CurrentWaterLevel")
-                        .WithMany()
-                        .HasForeignKey("WaterLevelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("CurrentWaterLevel");
 

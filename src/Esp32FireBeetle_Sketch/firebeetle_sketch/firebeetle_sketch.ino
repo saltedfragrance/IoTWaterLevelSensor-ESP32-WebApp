@@ -130,7 +130,7 @@ void sendMeasurement() {
   bool levelPublished = client.publish(tankLevelTopic, sensorValue);
   if(levelPublished == true) Serial.println("Water level published.");
   else Serial.println("Failed to publish water level.");
-  delay(2000);
+
   bool batteryPublished = client.publish(batteryLevelTopic, batteryLevel);
   if(batteryPublished == true) Serial.println("Battery level published.");
   else Serial.println("Failed to publish battery level.");
