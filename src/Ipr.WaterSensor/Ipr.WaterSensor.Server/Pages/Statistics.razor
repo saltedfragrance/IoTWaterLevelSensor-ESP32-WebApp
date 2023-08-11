@@ -7,7 +7,7 @@
     <MudPaper Width="100%" Elevation="2" Class="d-flex justify-content-center mb-4">
         <MudStack Row="false" Class="d-flex justify-content-center">
             <MudPaper Elevation="0" Class="mb-2">
-                <MudSelect @bind-Value="CurrentSelectedTankId" Placeholder="Selecteer een tank" AdornmentColor="Color.Primary" Label="Selecteer">
+                <MudSelect @bind-Value="CurrentSelectedTankId" Placeholder="Selecteer een tank" AdornmentColor="Color.Primary" Label="Selecteer tank">
                     @foreach (var tank in Tanks)
                     {
                         <MudSelectItem Value="tank.Id">@tank.Name</MudSelectItem>
