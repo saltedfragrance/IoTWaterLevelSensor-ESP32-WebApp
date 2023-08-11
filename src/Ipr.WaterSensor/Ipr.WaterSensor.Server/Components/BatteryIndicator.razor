@@ -6,11 +6,11 @@
         }
         else if (BatteryPercentage > 20 && BatteryPercentage < 50)
         {
-            <MudChip Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Surface" Color="Color.Warning" Size="Size.Small">@BatteryPercentage%</MudChip>
+            <MudChip Icon="@Icons.Material.Filled.Battery3Bar" IconColor="Color.Surface" Color="Color.Warning" Size="Size.Small">@BatteryPercentage%</MudChip>
         }
         else if (BatteryPercentage > 50)
         {
-            <MudChip Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Surface" Color="Color.Success" Size="Size.Medium">@BatteryPercentage%</MudChip>
+            <MudChip Icon="@Icons.Material.Filled.BatteryFull" IconColor="Color.Surface" Color="Color.Success" Size="Size.Medium">@BatteryPercentage%</MudChip>
         }
     </MudStack>
 </MudPaper>
