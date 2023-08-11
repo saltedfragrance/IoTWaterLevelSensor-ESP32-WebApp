@@ -3,7 +3,7 @@
 
 <PageTitle>Niveau</PageTitle>
 
-@if (Tank != null)
+@if (CurrentWaterTank != null)
 {
     @if (FireBeetleDevice != null)
     {
@@ -13,7 +13,7 @@
 
         <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="2">
             <MudStack Row="false" Class="align-items-center">
-                <MudText Typo="Typo.h3" Align="Align.Center">@Tank.Name</MudText>
+                <MudText Typo="Typo.h3" Align="Align.Center">@CurrentWaterTank.Name</MudText>
                 @if (CurrentWaterLevelPercentage > 50)
                 {
                     <MudText Typo="Typo.h4" Align="Align.Center" Color="Color.Success">@CurrentWaterLevelPercentage %</MudText>
@@ -26,7 +26,7 @@
                 {
                     <MudText Typo="Typo.h4" Align="Align.Center" Color="Color.Error">@CurrentWaterLevelPercentage %</MudText>
                 }
-                <MudText Typo="Typo.h5" Align="Align.Center"><b>@Math.Round((((Tank.Volume * 1000) / 100) * CurrentWaterLevelPercentage), 2)L</b></MudText>
+                <MudText Typo="Typo.h5" Align="Align.Center"><b>@Math.Round((((CurrentWaterTank.Volume * 1000) / 100) * CurrentWaterLevelPercentage), 2)L</b></MudText>
                 <div class="waterTank" style="--waterLevel:@GetWaterLevelPixels(CurrentWaterLevelPercentage)"></div>
             </MudStack>
         </MudPaper>

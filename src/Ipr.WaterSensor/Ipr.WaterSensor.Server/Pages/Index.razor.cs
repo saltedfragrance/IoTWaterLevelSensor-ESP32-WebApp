@@ -16,42 +16,49 @@ namespace Ipr.WaterSensor.Server.Pages
         public MQTTService MQTTService { get; set; } = default!;
         [Inject]
         protected IDbContextFactory<WaterSensorDbContext> DbContextFactory { get; set; } = default!;
-        public WaterTank Tank { get; set; } = default!;
         public double CurrentWaterLevelPercentage { get; set; }
+        public TankStatistics TankStatistics { get; set; }
+        public WaterTank CurrentWaterTank { get; set; } = default!;
         public FireBeetle FireBeetleDevice { get; set; } = default!;
         private async Task GetData()
         {
             using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
             {
-                Tank = await context.WaterTanks.Include(x => x.CurrentWaterLevel).FirstOrDefaultAsync();
+                CurrentWaterTank = await context.WaterTanks.Include(tank => tank.WaterLevels).FirstOrDefaultAsync();
                 FireBeetleDevice = await context.FireBeetleDevice.FirstOrDefaultAsync();
+                TankStatistics = await context.TankStatistics.Where(stat => stat.WaterTankId == CurrentWaterTank.Id).FirstOrDefaultAsync();
             }
-            CurrentWaterLevelPercentage = Math.Round(Tank.CurrentWaterLevel.Percentage, 2);
+            UpdateWaterPercentage();
         }
 
-        private string GetWaterLevelPixels(double percentage)
+        private void UpdateWaterPercentage()
         {
-            var pixels = (210 - (percentage * 2) - 35).ToString() + "px";
-            return pixels;
+            var currentWaterLevel = CurrentWaterTank.WaterLevels.OrderByDescending(level => level.DateTimeMeasured).First();
+            CurrentWaterLevelPercentage = Math.Round(currentWaterLevel.Percentage, 2);
         }
-
-        private void UpdateWaterTankLevel(string measuredValue)
+        private async Task UpdateWaterTankLevel(string measuredValue)
         {
-            var newVolume = Tank.Radius * ((Tank.Height + 60) - Convert.ToDouble(measuredValue));
+            var newVolume = CurrentWaterTank.Radius * ((CurrentWaterTank.Height + 60) - Convert.ToDouble(measuredValue));
+            var newPercentage = (newVolume / CurrentWaterTank.Volume) * 100;
+
+            if (newPercentage > 100) newPercentage = 100;
+            else if (newPercentage < 0) newPercentage = 0;
+
+            var newWaterLevel = new WaterLevel
+            {
+                DateTimeMeasured = DateTime.Now,
+                Id = Guid.NewGuid(),
+                Percentage = newPercentage,
+                WaterTankId = CurrentWaterTank.Id
+            };
+
             using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
             {
-                var newPercentage = (newVolume / Tank.Volume) * 100;
-
-                if (newPercentage > 100) newPercentage = 100;
-                else if (newPercentage < 0) newPercentage = 0;
-
-                var waterLevel = new WaterLevel { DateTimeMeasured = DateTime.Now, Id = Guid.NewGuid(), Percentage = newPercentage };
-                var tankToUpdate = context.WaterTanks.First(x => x.Id == Tank.Id);
-                tankToUpdate.CurrentWaterLevelId = waterLevel.Id;
-                context.Add(waterLevel);
-                context.Update(tankToUpdate);
-                context.SaveChanges();
+                await context.AddAsync(newWaterLevel);
+                await context.SaveChangesAsync();
             }
+            UpdateWaterPercentage();
+            await UpdateStatistics(newPercentage);
         }
 
         private async Task UpdateBatteryLevel(string measuredValue)
@@ -60,6 +67,50 @@ namespace Ipr.WaterSensor.Server.Pages
             {
                 context.FireBeetleDevice.First().BatteryPercentage = Convert.ToDouble(measuredValue);
                 await context.SaveChangesAsync();
+            }
+        }
+        private string GetWaterLevelPixels(double percentage)
+        {
+            var pixels = (210 - (percentage * 2) - 35).ToString() + "px";
+            return pixels;
+        }
+
+        private async Task UpdateStatistics(double newPercentage)
+        {
+            if (TankStatistics == null)
+            {
+                TankStatistics = new TankStatistics
+                {
+                    Id = Guid.NewGuid(),
+                    Month = DateTime.Now.Month,
+                    WaterTankId = CurrentWaterTank.Id,
+                    Year = DateTime.Now.Year
+                };
+
+                using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
+                {
+                    await context.AddAsync(TankStatistics);
+                    await context.SaveChangesAsync();
+                }
+            }
+
+            if (CurrentWaterTank.WaterLevels.Count > 0)
+            {
+                var previousWaterLevel = CurrentWaterTank.WaterLevels.Where(level => level.DateTimeMeasured.Day == (DateTime.Now.Day - 1)).FirstOrDefault();
+                if (previousWaterLevel != null)
+                {
+                    var previousPercentage = previousWaterLevel.Percentage;
+                    if (previousPercentage < newPercentage)
+                    {
+                        var litersConsumed = (newPercentage - previousPercentage) * 100;
+
+                        using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
+                        {
+                            TankStatistics.TotalWaterConsumed += litersConsumed;
+                            await context.SaveChangesAsync();
+                        }
+                    }
+                }
             }
         }
     }

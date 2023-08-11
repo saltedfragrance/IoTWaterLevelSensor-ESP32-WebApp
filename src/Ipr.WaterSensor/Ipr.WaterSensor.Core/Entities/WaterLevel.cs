@@ -11,5 +11,7 @@ namespace Ipr.WaterSensor.Core.Entities
     {
         public double Percentage { get; set; }
         public DateTime DateTimeMeasured { get; set; }
+        public Guid WaterTankId { get; set; }
+        public WaterTank WaterTank { get; set; }
     }
 }

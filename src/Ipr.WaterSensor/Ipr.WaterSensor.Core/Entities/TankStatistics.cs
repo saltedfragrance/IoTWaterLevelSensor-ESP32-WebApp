@@ -9,9 +9,10 @@ namespace Ipr.WaterSensor.Core.Entities
 {
     public class TankStatistics : BaseEntity
     {
-        //gemiddeld dagelijks gebruik
-        //achterhalen adhv dagelijks gebruik en verwachtte neerslag hoe lang voorraad nog gaat meegaan
-        public int TotalWaterCollected { get; set; }
-        public int TotalWaterDispensed { get; set; }
+        public Guid WaterTankId { get; set; }
+        public WaterTank WaterTank { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public double TotalWaterConsumed { get; set; }
     }
 }
