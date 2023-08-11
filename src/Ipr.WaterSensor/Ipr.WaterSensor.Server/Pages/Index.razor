@@ -10,56 +10,34 @@
         <BatteryIndicator BatteryPercentage="@FireBeetleDevice.BatteryPercentage"></BatteryIndicator>
     }
     <MudStack Row="false">
-
         <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="2">
             <MudStack Row="false" Class="align-items-center">
                 <MudText Typo="Typo.h3" Align="Align.Center">@CurrentWaterTank.Name</MudText>
-                @if (CurrentWaterLevelPercentage > 50)
+                @if (CurrentWaterPercentage > 50)
                 {
-                    <MudText Typo="Typo.h4" Align="Align.Center" Color="Color.Success">@CurrentWaterLevelPercentage %</MudText>
+                    <MudText Typo="Typo.h4" Align="Align.Center" Color="Color.Success">@CurrentWaterPercentage %</MudText>
                 }
-                else if (CurrentWaterLevelPercentage < 50 && CurrentWaterLevelPercentage > 20)
+                else if (CurrentWaterPercentage < 50 && CurrentWaterPercentage > 20)
                 {
-                    <MudText Typo="Typo.h4" Align="Align.Center" Color="Color.Secondary">@CurrentWaterLevelPercentage %</MudText>
+                    <MudText Typo="Typo.h4" Align="Align.Center" Color="Color.Secondary">@CurrentWaterPercentage %</MudText>
                 }
-                else if (CurrentWaterLevelPercentage < 20)
+                else if (CurrentWaterPercentage < 20)
                 {
-                    <MudText Typo="Typo.h4" Align="Align.Center" Color="Color.Error">@CurrentWaterLevelPercentage %</MudText>
+                    <MudText Typo="Typo.h4" Align="Align.Center" Color="Color.Error">@CurrentWaterPercentage %</MudText>
                 }
-                <MudText Typo="Typo.h5" Align="Align.Center"><b>@Math.Round((((CurrentWaterTank.Volume * 1000) / 100) * CurrentWaterLevelPercentage), 2)L</b></MudText>
-                <div class="waterTank" style="--waterLevel:@GetWaterLevelPixels(CurrentWaterLevelPercentage)"></div>
+                <div class="waterTank" style="--waterLevel:@GetWaterLevelPixels(CurrentWaterPercentage)"></div>
+                <MudChip Size="Size.Large" Icon="@Icons.Material.Filled.WaterDrop" Color="Color.Info"><b>@Math.Round((((CurrentWaterTank.Volume * 1000) / 100) * CurrentWaterPercentage), 2)L</b></MudChip>
+                <MudText Align="Align.Left"><i>Laatste update: @CurrentWaterLevel.DateTimeMeasured</i></MudText>
             </MudStack>
         </MudPaper>
 
     </MudStack>
-    //laatst gemeten
-    //mqqt: connected
-    //wifi: connected
 }
 
 
 @code{
     protected override async Task OnInitializedAsync()
     {
-        if (!MQTTService.ClientStarted)
-        {
-            await MQTTService.StartClient();
-            MQTTService.MqttClient.ApplicationMessageReceivedAsync += e =>
-            {
-                var measurement = Encoding.Default.GetString(e.ApplicationMessage.Payload);
-                if (e.ApplicationMessage.Topic == MQTTService.topicMainTank)
-                {
-                    UpdateWaterTankLevel(measurement);
-                }
-
-                if (e.ApplicationMessage.Topic == MQTTService.topicBatteryLevel)
-                {
-                    UpdateBatteryLevel(measurement);
-                }
-
-                return Task.CompletedTask;
-            };
-        }
-        await GetData();
+        await Initialize();
     }
 }

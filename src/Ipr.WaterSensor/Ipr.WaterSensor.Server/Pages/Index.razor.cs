@@ -16,10 +16,35 @@ namespace Ipr.WaterSensor.Server.Pages
         public MQTTService MQTTService { get; set; } = default!;
         [Inject]
         protected IDbContextFactory<WaterSensorDbContext> DbContextFactory { get; set; } = default!;
-        public double CurrentWaterLevelPercentage { get; set; }
+        public WaterLevel CurrentWaterLevel { get; set; }
+        public double CurrentWaterPercentage { get; set; }
         public TankStatistics TankStatistics { get; set; }
         public WaterTank CurrentWaterTank { get; set; } = default!;
         public FireBeetle FireBeetleDevice { get; set; } = default!;
+
+        private async Task Initialize()
+        {
+            if (!MQTTService.ClientStarted)
+            {
+                await MQTTService.StartClient();
+                MQTTService.MqttClient.ApplicationMessageReceivedAsync += e =>
+                {
+                    var measurement = Encoding.Default.GetString(e.ApplicationMessage.Payload);
+                    if (e.ApplicationMessage.Topic == MQTTService.topicMainTank)
+                    {
+                        UpdateWaterTankLevel(measurement);
+                    }
+
+                    if (e.ApplicationMessage.Topic == MQTTService.topicBatteryLevel)
+                    {
+                        UpdateBatteryLevel(measurement);
+                    }
+
+                    return Task.CompletedTask;
+                };
+            }
+            await GetData();
+        }
         private async Task GetData()
         {
             using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
@@ -33,8 +58,8 @@ namespace Ipr.WaterSensor.Server.Pages
 
         private void UpdateWaterPercentage()
         {
-            var currentWaterLevel = CurrentWaterTank.WaterLevels.OrderByDescending(level => level.DateTimeMeasured).First();
-            CurrentWaterLevelPercentage = Math.Round(currentWaterLevel.Percentage, 2);
+            CurrentWaterLevel = CurrentWaterTank.WaterLevels.OrderByDescending(level => level.DateTimeMeasured).First();
+            CurrentWaterPercentage = (Math.Round(CurrentWaterLevel.Percentage, 2));
         }
         private async Task UpdateWaterTankLevel(string measuredValue)
         {

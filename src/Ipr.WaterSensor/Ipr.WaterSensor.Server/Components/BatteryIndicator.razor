@@ -1,16 +1,16 @@
-﻿<MudPaper Class="d-flex justify-content-end" Elevation="0">
+﻿<MudPaper Class="d-flex justify-content-start" Elevation="0">
     <MudStack Row="true" Class="align-items-end">
         @if (BatteryPercentage < 20)
         {
-            <MudChip Variant="Variant.Outlined" Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Error" Color="Color.Error" Size="Size.Small">@BatteryPercentage%</MudChip>
+            <MudChip Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Surface" Color="Color.Error" Size="Size.Small">@BatteryPercentage%</MudChip>
         }
         else if (BatteryPercentage > 20 && BatteryPercentage < 50)
         {
-            <MudChip Variant="Variant.Outlined" Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Warning" Color="Color.Warning" Size="Size.Small">@BatteryPercentage%</MudChip>
+            <MudChip Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Surface" Color="Color.Warning" Size="Size.Small">@BatteryPercentage%</MudChip>
         }
         else if (BatteryPercentage > 50)
         {
-            <MudChip Variant="Variant.Outlined" Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Success" Color="Color.Success" Size="Size.Small">@BatteryPercentage%</MudChip>
+            <MudChip Icon="@Icons.Material.Filled.Battery1Bar" IconColor="Color.Surface" Color="Color.Success" Size="Size.Medium">@BatteryPercentage%</MudChip>
         }
     </MudStack>
 </MudPaper>
