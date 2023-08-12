@@ -49,8 +49,24 @@ namespace Ipr.WaterSensor.Server.Services
                 ClientStarted = true;
             }
 
-            await MqttClient.SubscribeAsync(topicMainTank);
-            await MqttClient.SubscribeAsync(topicBatteryLevel);
+            var mqttSubscribeOptionsTank = factory.CreateSubscribeOptionsBuilder()
+            .WithTopicFilter(
+                f =>
+                {
+                    f.WithTopic(topicMainTank);
+                })
+            .Build();
+
+            var mqttSubscribeOptionsBattery = factory.CreateSubscribeOptionsBuilder()
+                .WithTopicFilter(
+                    f =>
+                    {
+                        f.WithTopic(topicBatteryLevel);
+                    })
+                .Build();
+
+            await MqttClient.SubscribeAsync(mqttSubscribeOptionsTank, CancellationToken.None);
+            await MqttClient.SubscribeAsync(mqttSubscribeOptionsBattery, CancellationToken.None);
         }
     }
 }
