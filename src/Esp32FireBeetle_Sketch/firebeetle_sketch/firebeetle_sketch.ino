@@ -143,8 +143,6 @@ void sendMeasurement() {
   bool batteryPublished = client.publish(batteryLevelTopic, batteryLevel);
   if(batteryPublished == true) Serial.println("Battery level published.");
   else Serial.println("Failed to publish battery level.");
-
-  delay(5000);
 }
 
 void loop() {
@@ -156,6 +154,8 @@ void loop() {
   //metingen
   doMeasurement();
   sendMeasurement();
+
+  delay(5000);
 
   //deep sleep
   esp_sleep_enable_timer_wakeup(1800000000);

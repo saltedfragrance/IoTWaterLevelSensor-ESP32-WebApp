@@ -90,6 +90,7 @@ namespace Ipr.WaterSensor.Server.Pages
             using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
             {
                 context.FireBeetleDevice.First().BatteryPercentage = Convert.ToDouble(measuredValue);
+                context.FireBeetleDevice.First().DateTimeMeasured = DateTime.Now;
                 await context.SaveChangesAsync();
             }
         }
