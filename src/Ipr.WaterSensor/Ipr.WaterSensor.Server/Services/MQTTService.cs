@@ -9,11 +9,11 @@ namespace Ipr.WaterSensor.Server.Services
 {
     public class MQTTService
     {
-        private const string broker = "u325aca1.ala.us-east-1.emqxsl.com";
+        private const string broker = "f07b2dbeeae343528d0b9dad5a13aebf.s1.eu.hivemq.cloud";
         private const int port = 8883;
         private string clientId = Guid.NewGuid().ToString();
         private const string username = "watersensor_receive";
-        private const string password = "45745737444568745";
+        private const string password = "ZEEZRrrze4235";
         public string topicMainTank = "watersensor_main_tank";
         public string topicBatteryLevel = "battery_level";
         public string MeasuredValueMainTank { get; set; }

@@ -39,7 +39,6 @@ namespace Ipr.WaterSensor.Server.Pages
                     {
                         UpdateBatteryLevel(measurement);
                     }
-                    MQTTService.StartClient();
                     return Task.CompletedTask;
                 };
             }
