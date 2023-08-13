@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ipr.WaterSensor.Infrastructure.Migrations
 {
     [DbContext(typeof(WaterSensorDbContext))]
-    [Migration("20230811131539_InitialMigration")]
+    [Migration("20230812193528_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -46,7 +46,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         {
                             Id = new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"),
                             BatteryPercentage = 67.0,
-                            DateTimeMeasured = new DateTime(2023, 8, 11, 15, 15, 39, 478, DateTimeKind.Local).AddTicks(5063)
+                            DateTimeMeasured = new DateTime(2023, 8, 12, 21, 35, 28, 42, DateTimeKind.Local).AddTicks(2671)
                         });
                 });
 
@@ -77,7 +77,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5beb969f-6a34-4d14-85e7-9cfd44ea9cc3"),
+                            Id = new Guid("8509b424-318c-4936-a971-ff6617f17abd"),
                             Month = 7,
                             TotalWaterConsumed = 200.0,
                             WaterTankId = new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"),
@@ -85,7 +85,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f168c85f-69de-4d05-8a41-f57765cf432e"),
+                            Id = new Guid("0194cdcd-9d5f-468a-a32f-cddeb96e19dc"),
                             Month = 6,
                             TotalWaterConsumed = 300.0,
                             WaterTankId = new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"),
@@ -93,7 +93,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2a004e8a-c615-41c3-bfd1-b79e0e582f31"),
+                            Id = new Guid("f10dc9d0-ae7f-433d-aa40-7bdd309e6e6b"),
                             Month = 5,
                             TotalWaterConsumed = 500.0,
                             WaterTankId = new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"),
@@ -183,6 +183,9 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                     b.Property<int>("Radius")
                         .HasColumnType("int");
 
+                    b.Property<double>("UpdateIntervalMicroSeconds")
+                        .HasColumnType("float");
+
                     b.Property<int>("Volume")
                         .HasColumnType("int");
 
@@ -197,6 +200,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                             Height = 180,
                             Name = "Main water tank",
                             Radius = 133,
+                            UpdateIntervalMicroSeconds = 1800000000.0,
                             Volume = 10
                         });
                 });

@@ -3,10 +3,15 @@ using Ipr.WaterSensor.Infrastructure.Data;
 using Ipr.WaterSensor.Server.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using MQTTnet;
 using MQTTnet.Client;
+using MQTTnet.Server;
+using MudBlazor;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Globalization;
 using System.Text;
+using static MudBlazor.Colors;
 
 namespace Ipr.WaterSensor.Server.Pages
 {
@@ -39,6 +44,14 @@ namespace Ipr.WaterSensor.Server.Pages
                     {
                         UpdateBatteryLevel(measurement);
                     }
+
+                    if (e.ApplicationMessage.Topic == MQTTService.topicIntervalReceive)
+                    {
+                        if (measurement != CurrentWaterTank.UpdateIntervalMicroSeconds.ToString())
+                        {
+                            PublishNewInterval(CurrentWaterTank.UpdateIntervalMicroSeconds);
+                        }
+                    }
                     return Task.CompletedTask;
                 };
             }
@@ -54,6 +67,32 @@ namespace Ipr.WaterSensor.Server.Pages
             }
             UpdateWaterPercentage();
         }
+
+        private async Task SaveInterval(double newInterval)
+        {
+            using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
+            {
+                var toUpdate = context.WaterTanks.FirstOrDefault(tank => tank.Id == CurrentWaterTank.Id);
+                toUpdate.UpdateIntervalMicroSeconds = newInterval;
+                CurrentWaterTank.UpdateIntervalMicroSeconds = newInterval;
+                await context.SaveChangesAsync();
+            }
+        }
+
+        private async Task PublishNewInterval(double newInterval)
+        {
+            string intervalMicroseconds = newInterval.ToString();
+
+            byte[] bytes = Encoding.UTF8.GetBytes(intervalMicroseconds);
+
+            var applicationMessage = new MqttApplicationMessageBuilder()
+                .WithTopic(MQTTService.topicIntervalSend)
+                .WithPayloadSegment(bytes)
+            .Build();
+
+            await MQTTService.MqttClient.PublishAsync(applicationMessage, CancellationToken.None);
+        }
+
 
         private void UpdateWaterPercentage()
         {
@@ -137,6 +176,17 @@ namespace Ipr.WaterSensor.Server.Pages
                     }
                 }
             }
+        }
+
+        private double GetCurrentWaterTankUpdateIntervalMinutes()
+        {
+            return (CurrentWaterTank.UpdateIntervalMicroSeconds / 60000000) / 60;
+        }
+        private async Task SetCurrentWaterTankUpdateIntervalMinutes(double newInterval)
+        {
+            CurrentWaterTank.UpdateIntervalMicroSeconds = ((newInterval * 60000000) * 60);
+            await SaveInterval(CurrentWaterTank.UpdateIntervalMicroSeconds);
+            await GetData();
         }
     }
 }

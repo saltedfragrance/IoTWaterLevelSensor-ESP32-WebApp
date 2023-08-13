@@ -34,7 +34,8 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: false),
                     Radius = table.Column<int>(type: "int", nullable: false),
-                    Volume = table.Column<int>(type: "int", nullable: false)
+                    Volume = table.Column<int>(type: "int", nullable: false),
+                    UpdateIntervalMicroSeconds = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,21 +86,21 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "FireBeetleDevice",
                 columns: new[] { "Id", "BatteryPercentage", "DateTimeMeasured" },
-                values: new object[] { new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"), 67.0, new DateTime(2023, 8, 11, 15, 15, 39, 478, DateTimeKind.Local).AddTicks(5063) });
+                values: new object[] { new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"), 67.0, new DateTime(2023, 8, 12, 21, 35, 28, 42, DateTimeKind.Local).AddTicks(2671) });
 
             migrationBuilder.InsertData(
                 table: "WaterTanks",
-                columns: new[] { "Id", "Height", "Name", "Radius", "Volume" },
-                values: new object[] { new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 180, "Main water tank", 133, 10 });
+                columns: new[] { "Id", "Height", "Name", "Radius", "UpdateIntervalMicroSeconds", "Volume" },
+                values: new object[] { new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 180, "Main water tank", 133, 1800000000.0, 10 });
 
             migrationBuilder.InsertData(
                 table: "TankStatistics",
                 columns: new[] { "Id", "Month", "TotalWaterConsumed", "WaterTankId", "Year" },
                 values: new object[,]
                 {
-                    { new Guid("2a004e8a-c615-41c3-bfd1-b79e0e582f31"), 5, 500.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 },
-                    { new Guid("5beb969f-6a34-4d14-85e7-9cfd44ea9cc3"), 7, 200.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 },
-                    { new Guid("f168c85f-69de-4d05-8a41-f57765cf432e"), 6, 300.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 }
+                    { new Guid("0194cdcd-9d5f-468a-a32f-cddeb96e19dc"), 6, 300.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 },
+                    { new Guid("8509b424-318c-4936-a971-ff6617f17abd"), 7, 200.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 },
+                    { new Guid("f10dc9d0-ae7f-433d-aa40-7bdd309e6e6b"), 5, 500.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 }
                 });
 
             migrationBuilder.InsertData(

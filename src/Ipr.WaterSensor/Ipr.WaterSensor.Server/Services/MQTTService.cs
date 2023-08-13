@@ -16,6 +16,8 @@ namespace Ipr.WaterSensor.Server.Services
         private const string password = "ZEEZRrrze4235";
         public string topicMainTank = "watersensor_main_tank";
         public string topicBatteryLevel = "battery_level";
+        public string topicIntervalReceive = "intervalReceive";
+        public string topicIntervalSend = "intervalSend";
         public string MeasuredValueMainTank { get; set; }
         public string MeasuredValueBattery { get; set; }
         public bool ClientStarted { get; set; }
@@ -65,8 +67,17 @@ namespace Ipr.WaterSensor.Server.Services
                     })
                 .Build();
 
+            var mqttSubscribeOptionsInterval = factory.CreateSubscribeOptionsBuilder()
+                .WithTopicFilter(
+                    f =>
+                    {
+                        f.WithTopic(topicIntervalReceive);
+                    })
+                .Build();
+
             await MqttClient.SubscribeAsync(mqttSubscribeOptionsTank, CancellationToken.None);
             await MqttClient.SubscribeAsync(mqttSubscribeOptionsBattery, CancellationToken.None);
+            await MqttClient.SubscribeAsync(mqttSubscribeOptionsInterval, CancellationToken.None);
         }
     }
 }
