@@ -68,15 +68,15 @@ namespace Ipr.WaterSensor.Server.Pages
             UpdateWaterPercentage();
         }
 
-        private async Task SaveInterval(double newInterval)
+        private async Task SaveInterval()
         {
             using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
             {
                 var toUpdate = context.WaterTanks.FirstOrDefault(tank => tank.Id == CurrentWaterTank.Id);
-                toUpdate.UpdateIntervalMicroSeconds = newInterval;
-                CurrentWaterTank.UpdateIntervalMicroSeconds = newInterval;
+                toUpdate.UpdateIntervalMicroSeconds = CurrentWaterTank.UpdateIntervalMicroSeconds;
                 await context.SaveChangesAsync();
             }
+            await GetData();
         }
 
         private async Task PublishNewInterval(double newInterval)
@@ -180,13 +180,11 @@ namespace Ipr.WaterSensor.Server.Pages
 
         private double GetCurrentWaterTankUpdateIntervalMinutes()
         {
-            return (CurrentWaterTank.UpdateIntervalMicroSeconds / 60000000) / 60;
+            return (CurrentWaterTank.UpdateIntervalMicroSeconds / 60000000);
         }
         private async Task SetCurrentWaterTankUpdateIntervalMinutes(double newInterval)
         {
-            CurrentWaterTank.UpdateIntervalMicroSeconds = ((newInterval * 60000000) * 60);
-            await SaveInterval(CurrentWaterTank.UpdateIntervalMicroSeconds);
-            await GetData();
+            CurrentWaterTank.UpdateIntervalMicroSeconds = ((newInterval * 60000000));
         }
     }
 }

@@ -12,8 +12,6 @@
 #define trigPin D10  //vuurt de geluidsgolf af
 #define echoPin D11  //vangt de gereflecteerde geluidsgolf terug op
 
-RTC_DATA_ATTR uint64_t updateInterval = 18000;
-
 //ssl certificaat voor de mqtt broker
 const char *ca_cert =
   "-----BEGIN CERTIFICATE-----\n"
@@ -48,8 +46,11 @@ const char *ca_cert =
   "emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc="
   "-----END CERTIFICATE-----\n";
 
+//te onthouden update interval in RTC geheugen
+RTC_DATA_ATTR uint64_t updateInterval = 1800000000;
+
 //non blocking timer
-Neotimer mytimer = Neotimer(10000);
+Neotimer myTimer = Neotimer(10000);
 
 //batterij module
 DFRobot_MAX17043 FuelGauge;
@@ -65,14 +66,14 @@ const char *password = "Telenet12345.";
 //mqtt verbinding
 WiFiClientSecure espClient;
 PubSubClient client(espClient);
-const char *mqtt_broker = "f07b2dbeeae343528d0b9dad5a13aebf.s1.eu.hivemq.cloud";
+const char *mqttBroker = "f07b2dbeeae343528d0b9dad5a13aebf.s1.eu.hivemq.cloud";
 const char *tankLevelTopic = "watersensor_main_tank";
 const char *batteryLevelTopic = "battery_level";
 const char *intervalTopicSend = "intervalSend";
 const char *intervalTopicReceive = "intervalReceive";
-const char *mqtt_username = "watersensor_publish";
-const char *mqtt_password = "ZEEZRrrze4235";
-const int mqtt_port = 8883;
+const char *mqttUsername = "watersensor_publish";
+const char *mqttPassword = "ZEEZRrrze4235";
+const int mqttPort = 8883;
 
 void setup() {
   // baudrate snelheid
@@ -80,18 +81,18 @@ void setup() {
 
   FuelGauge.begin();
 
-  connectWiFi();
-  ConnectMQQT();
+  ConnectWiFi();
+  ConnectMQTT();
 
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
 
   //metingen
-  doMeasurement();
-  sendMeasurement();
+  DoMeasurement();
+  SendMeasurement();
 }
 
-void doMeasurement() {
+void DoMeasurement() {
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
 
@@ -114,7 +115,7 @@ void doMeasurement() {
   Serial.println(" %");
 }
 
-void connectWiFi() {
+void ConnectWiFi() {
   WiFi.begin(ssid, password);
 
   Serial.println("\nConnecting to wifi");
@@ -127,14 +128,14 @@ void connectWiFi() {
   Serial.println("\nConnected to the WiFi network");
 }
 
-void ConnectMQQT() {
+void ConnectMQTT() {
   espClient.setCACert(ca_cert);
-  client.setServer(mqtt_broker, mqtt_port);
+  client.setServer(mqttBroker, mqttPort);
   client.setCallback(callback);
   while (!client.connected()) {
     String client_id = "watersensor_publish";
     Serial.printf("The client %s connects to the public mqtt broker\n", client_id.c_str());
-    if (client.connect(client_id.c_str(), mqtt_username, mqtt_password)) {
+    if (client.connect(client_id.c_str(), mqttUsername, mqttPassword)) {
       Serial.println("Public emqx mqtt broker connected");
     } else {
       Serial.print("failed with state ");
@@ -148,7 +149,7 @@ void ConnectMQQT() {
   delay(3000);
 }
 
-void sendMeasurement() {
+void SendMeasurement() {
   String sensorValue_str;
   String interval_str;
   String batteryLevel_str;
@@ -177,7 +178,7 @@ void sendMeasurement() {
   if (intervalPublished == true) Serial.println("Interval published.");
   else Serial.println("Failed to publish interval.");
 
-  mytimer.start();
+  myTimer.start();
 }
 
 void callback(char *topic, byte *payload, unsigned int length) {
@@ -186,8 +187,8 @@ void callback(char *topic, byte *payload, unsigned int length) {
     value += (char)payload[i];
   }
   value[length] = '\0';
-  char* end;
-  updateInterval = strtoull(value.c_str(), &end,10 );
+  char *end;
+  updateInterval = strtoull(value.c_str(), &end, 10);
 
   Serial.print("Interval changed to: ");
   Serial.println(updateInterval);
@@ -195,12 +196,12 @@ void callback(char *topic, byte *payload, unsigned int length) {
 
 void loop() {
   if (!client.connected()) {
-    ConnectMQQT();
+    ConnectMQTT();
   }
   client.subscribe(intervalTopicSend);
   client.loop();
   //deep sleep
-  if (mytimer.done()) {
+  if (myTimer.done()) {
     esp_sleep_enable_timer_wakeup(updateInterval);
     Serial.println("Deep sleep enabled");
     esp_deep_sleep_start();
