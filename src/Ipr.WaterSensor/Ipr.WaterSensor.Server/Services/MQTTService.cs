@@ -9,15 +9,15 @@ namespace Ipr.WaterSensor.Server.Services
 {
     public class MQTTService
     {
-        private const string broker = "f07b2dbeeae343528d0b9dad5a13aebf.s1.eu.hivemq.cloud";
-        private const int port = 8883;
+        private string broker = Properties.Resources.MQTTBroker;
+        private int port = int.Parse(Properties.Resources.MQTTPort);
         private string clientId = Guid.NewGuid().ToString();
-        private const string username = "watersensor_receive";
-        private const string password = "ZEEZRrrze4235";
-        public string topicMainTank = "watersensor_main_tank";
-        public string topicBatteryLevel = "battery_level";
-        public string topicIntervalReceive = "intervalReceive";
-        public string topicIntervalSend = "intervalSend";
+        private string username = Properties.Resources.MQTTUserName;
+        private string password = Properties.Resources.MQTTPassword;
+        public string topicMainTank = Properties.Resources.MQTTTopicMainTank;
+        public string topicBatteryLevel = Properties.Resources.MQTTTopicBatteryLevel;
+        public string topicIntervalReceive = Properties.Resources.MQTTTopicIntervalReceive;
+        public string topicIntervalSend = Properties.Resources.MQTTTopicIntervalSend;
         public string MeasuredValueMainTank { get; set; }
         public string MeasuredValueBattery { get; set; }
         public bool ClientStarted { get; set; }
@@ -38,7 +38,7 @@ namespace Ipr.WaterSensor.Server.Services
                 {
                     o.CertificateValidationHandler = _ => true;
                     o.SslProtocol = SslProtocols.Tls12; ;
-                    var certificate = new X509Certificate("certificates/emqxsl-ca.crt", "");
+                    var certificate = new X509Certificate(Properties.Resources.MQTTSSLCertificatePath, "");
                     o.Certificates = new List<X509Certificate> { certificate };
                 }
             )

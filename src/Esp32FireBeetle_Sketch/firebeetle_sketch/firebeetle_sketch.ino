@@ -112,7 +112,7 @@ void ConnectMQTT() {
   certificate[i] = '\0';
 
   //mqtt verbinden
-  espClient.setCACert(VALUE);
+  espClient.setCACert(certificate);
   client.setServer(mqttBroker, mqttPort);
   client.setCallback(callback);
   while (!client.connected()) {

@@ -14,7 +14,7 @@ namespace Ipr.WaterSensor.Server.Services
 
         public WeatherApiService()
         {
-            ApiUrl = "https://api.open-meteo.com/v1/forecast?latitude=51.1758&longitude=2.8758&daily=precipitation_sum,precipitation_probability_max&timezone=Europe%2FBerlin&forecast_days=16";
+            ApiUrl = Properties.Resources.WeatherApiAddress;
         }
 
         public async Task<List<CalendarItem>> GetData()
