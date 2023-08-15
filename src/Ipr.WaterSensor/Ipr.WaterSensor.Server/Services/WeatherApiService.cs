@@ -31,8 +31,7 @@ namespace Ipr.WaterSensor.Server.Services
                 WeatherData.Add(new WeatherPrediction
                 {
                     Date = Convert.ToDateTime(json.Children()[i].ToList()[0]),
-                    Precipitation = json.Children()[i].ToList()[1].Value<decimal?>(),
-                    PrecipitationProbability = json.Children()[i].ToList()[2].Value<string>()
+                    Precipitation = json.Children()[i].ToList()[1].Value<decimal?>()
                 });
             }
 

@@ -3,11 +3,6 @@
 #include <PubSubClient.h>
 #include <DFRobot_MAX17043.h>
 #include <neotimer.h>
-#include <iostream>
-#include <cstring>
-#include <string>
-#include <sstream>
-#include <FS.h>
 #include <SPIFFS.h>
 
 //pins voor ultrasone sensor
@@ -110,7 +105,8 @@ void ConnectMQTT() {
     i++;
   }
   certificate[i] = '\0';
-
+  SPIFFS.end();
+  
   //mqtt verbinden
   espClient.setCACert(certificate);
   client.setServer(mqttBroker, mqttPort);
