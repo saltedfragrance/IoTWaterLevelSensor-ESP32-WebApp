@@ -13,7 +13,7 @@ namespace Ipr.WaterSensor.Core.Entities
         public int Height { get; set; }
         public int Radius { get; set; }
         public int Volume { get; set; }
-        public double UpdateIntervalMicroSeconds { get; set; }
+        public double CurrentUpdateIntervalMicroSeconds { get; set; }
         public ICollection<WaterLevel> WaterLevels { get; set; }
         public ICollection<TankStatistics> TankStatistics { get; set; }
 }

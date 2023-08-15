@@ -28,18 +28,18 @@
                 <div class="waterTank" style="--waterLevel:@GetWaterLevelPixels(CurrentWaterPercentage)"></div>
                 <MudChip Size="Size.Large" Icon="@Icons.Material.Filled.WaterDrop" Color="Color.Info"><b>@Math.Round((((CurrentWaterTank.Volume * 1000) / 100) * CurrentWaterPercentage), 2)L</b></MudChip>
                 <MudText Align="Align.Left"><i>Laatste update: <b>@CurrentWaterLevel.DateTimeMeasured</b></i></MudText>
-                <MudText Align="Align.Left"><i>Volgende update: <b>@CurrentWaterLevel.DateTimeMeasured.AddMinutes(CurrentWaterTank.UpdateIntervalMicroSeconds / 60000000)</b></i></MudText>
+                <MudText Align="Align.Left"><i>Volgende update: <b>@CurrentWaterLevel.DateTimeMeasured.AddMinutes(CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000)</b></i></MudText>
             </MudStack>
         </MudPaper>
         <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="2">
             <MudStack Row="false" AlignItems="AlignItems.Center">
-                @if (((CurrentWaterTank.UpdateIntervalMicroSeconds / 60000000)) > 1)
+                @if (((CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000)) > 1)
                 {
-                    <MudText>Huidige update interval: <b>@((CurrentWaterTank.UpdateIntervalMicroSeconds / 60000000)) minuten</b> <b>(@Math.Round(((CurrentWaterTank.UpdateIntervalMicroSeconds / 60000000) / 60), 2) uur)</b></MudText>
+                    <MudText>Huidige update interval: <b>@((CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000)) minuten</b> <b>(@Math.Round(((CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000) / 60), 2) uur)</b></MudText>
                 }
                 else
                 {
-                    <MudText>Huidige update interval: <b>@((CurrentWaterTank.UpdateIntervalMicroSeconds / 60000000)) minuut</b> <b>(@Math.Round(((CurrentWaterTank.UpdateIntervalMicroSeconds / 60000000) / 60), 2) uur)</b></MudText>
+                    <MudText>Huidige update interval: <b>@((CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000)) minuut</b> <b>(@Math.Round(((CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000) / 60), 2) uur)</b></MudText>
                 }
                 <MudForm>
                     <MudStack Row="true" AlignItems="AlignItems.Center">

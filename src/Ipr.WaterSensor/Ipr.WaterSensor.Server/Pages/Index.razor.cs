@@ -47,9 +47,9 @@ namespace Ipr.WaterSensor.Server.Pages
 
                     if (e.ApplicationMessage.Topic == MQTTService.topicIntervalReceive)
                     {
-                        if (measurement != CurrentWaterTank.UpdateIntervalMicroSeconds.ToString())
+                        if (measurement != CurrentWaterTank.CurrentUpdateIntervalMicroSeconds.ToString())
                         {
-                            PublishNewInterval(CurrentWaterTank.UpdateIntervalMicroSeconds);
+                            PublishNewInterval(CurrentWaterTank.CurrentUpdateIntervalMicroSeconds);
                         }
                     }
                     return Task.CompletedTask;
@@ -73,7 +73,7 @@ namespace Ipr.WaterSensor.Server.Pages
             using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
             {
                 var toUpdate = context.WaterTanks.FirstOrDefault(tank => tank.Id == CurrentWaterTank.Id);
-                toUpdate.UpdateIntervalMicroSeconds = CurrentWaterTank.UpdateIntervalMicroSeconds;
+                toUpdate.CurrentUpdateIntervalMicroSeconds = CurrentWaterTank.CurrentUpdateIntervalMicroSeconds;
                 await context.SaveChangesAsync();
             }
             await GetData();
@@ -180,11 +180,11 @@ namespace Ipr.WaterSensor.Server.Pages
 
         private double GetCurrentWaterTankUpdateIntervalMinutes()
         {
-            return (CurrentWaterTank.UpdateIntervalMicroSeconds / 60000000);
+            return (CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000);
         }
         private async Task SetCurrentWaterTankUpdateIntervalMinutes(double newInterval)
         {
-            CurrentWaterTank.UpdateIntervalMicroSeconds = ((newInterval * 60000000));
+            CurrentWaterTank.CurrentUpdateIntervalMicroSeconds = ((newInterval * 60000000));
         }
     }
 }

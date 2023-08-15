@@ -13,7 +13,7 @@ namespace Ipr.WaterSensor.Infrastructure.Data.Seeding
         public static void Seed(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<WaterTank>().HasData(
-            new WaterTank { Id = Guid.Parse("2bf39e4b-0caa-4cda-8e28-883b88fce222"), Name = "Main water tank", Height = 180, Radius = 133, Volume = 10, UpdateIntervalMicroSeconds = 1800000000 }
+            new WaterTank { Id = Guid.Parse("2bf39e4b-0caa-4cda-8e28-883b88fce222"), Name = "Main water tank", Height = 180, Radius = 133, Volume = 10, CurrentUpdateIntervalMicroSeconds = 1800000000 }
             );
 
             modelBuilder.Entity<WaterLevel>().HasData(
