@@ -1,3 +1,4 @@
+#include <Preferences.h>
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h>
@@ -18,42 +19,105 @@ Neotimer myTimer = Neotimer(10000);
 //batterij module
 DFRobot_MAX17043 FuelGauge;
 
+//credentials
+Preferences preferences;
+
 //meting variabelen
 long duration;
 float distance;
 float batteryPercentage;
 
-//wifi verbinding
-const char *ssid = "Home 2.4ghz";
-const char *password = "Telenet12345.";
-
-//mqtt verbinding
+//mqtt en wifi verbinding
 WiFiClientSecure espClient;
 PubSubClient client(espClient);
-const char *mqttBroker = "f07b2dbeeae343528d0b9dad5a13aebf.s1.eu.hivemq.cloud";
+
+//login credentials
+String wiFiSsid;
+String wiFiPassword;
+String mqttBroker;
+String mqttUsername;
+String mqttwiFipassword;
+int mqttPort = 0;
+
+//topics
 const char *tankLevelTopic = "watersensor_main_tank";
 const char *batteryLevelTopic = "battery_level";
 const char *intervalTopicSend = "intervalSend";
 const char *intervalTopicReceive = "intervalReceive";
-const char *mqttUsername = "watersensor_publish";
-const char *mqttPassword = "ZEEZRrrze4235";
-const int mqttPort = 8883;
 
 void setup() {
-  // baudrate snelheid
+    // baudrate snelheid
   Serial.begin(115200);
 
-  FuelGauge.begin();
+  //credentials ophalen
+  preferences.begin("credentials", false);
+  GetCredentials();
 
+  FuelGauge.begin();
   ConnectWiFi();
   ConnectMQTT();
 
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
 
-  //metingen
+  //metingen uitvoeren en sturen
   MeasureDistanceToWater();
   SendMeasurement();
+}
+
+void GetCredentials() {
+  wiFiSsid = preferences.getString("wiFissid", "");
+  wiFiPassword = preferences.getString("wiFiPassword", "");
+  mqttBroker = preferences.getString("mqttBroker", "");
+  mqttUsername = preferences.getString("mqttUsername", "");
+  mqttwiFipassword = preferences.getString("mqttPassword", "");
+  mqttPort = preferences.getString("mqttPort", "").toInt();
+}
+
+void ConnectWiFi() {
+  WiFi.begin(wiFiSsid.c_str(), wiFiPassword.c_str());
+
+  Serial.println("\nConnecting to wifi");
+
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(100);
+  }
+
+  Serial.println("\nConnected to the WiFi network");
+}
+
+void ConnectMQTT() {
+  //ssl certificaat lezen uit SPIFFS geheugen
+  char certificate[2000] = { '\0' };
+  SPIFFS.begin();
+  File file = SPIFFS.open("/emqxsl-ca.crt");
+
+  uint16_t i = 0;
+  while (file.available()) {
+    certificate[i] = file.read();
+    i++;
+  }
+  certificate[i] = '\0';
+  SPIFFS.end();
+
+  //mqtt verbinden
+  espClient.setCACert(certificate);
+  client.setServer(mqttBroker.c_str(), mqttPort);
+  client.setCallback(callback);
+  while (!client.connected()) {
+    String client_id = "watersensor_publish";
+    Serial.printf("The client %s connects to the public mqtt broker\n", client_id.c_str());
+    if (client.connect(client_id.c_str(), mqttUsername.c_str(), mqttwiFipassword.c_str())) {
+      Serial.println("Public emqx mqtt broker connected");
+    } else {
+      Serial.print("failed with state ");
+      Serial.print(client.state());
+      delay(2000);
+    }
+  }
+
+  client.subscribe(intervalTopicSend);
 }
 
 void MeasureDistanceToWater() {
@@ -77,54 +141,6 @@ void MeasureDistanceToWater() {
   Serial.print("Battery level: ");
   Serial.print(batteryPercentage);
   Serial.println(" %");
-}
-
-void ConnectWiFi() {
-  WiFi.begin(ssid, password);
-
-  Serial.println("\nConnecting to wifi");
-
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.print(".");
-    delay(100);
-  }
-
-  Serial.println("\nConnected to the WiFi network");
-}
-
-
-void ConnectMQTT() {
-  //ssl certificaat lezen uit SPIFFS geheugen
-  char certificate[2000] = { '\0' };
-  SPIFFS.begin();
-  File file = SPIFFS.open("/emqxsl-ca.crt");
-
-  uint16_t i = 0;
-  while (file.available()) {
-    certificate[i] = file.read();
-    i++;
-  }
-  certificate[i] = '\0';
-  SPIFFS.end();
-  
-  //mqtt verbinden
-  espClient.setCACert(certificate);
-  client.setServer(mqttBroker, mqttPort);
-  client.setCallback(callback);
-  while (!client.connected()) {
-    String client_id = "watersensor_publish";
-    Serial.printf("The client %s connects to the public mqtt broker\n", client_id.c_str());
-    if (client.connect(client_id.c_str(), mqttUsername, mqttPassword)) {
-      Serial.println("Public emqx mqtt broker connected");
-    } else {
-      Serial.print("failed with state ");
-      Serial.print(client.state());
-      delay(2000);
-    }
-  }
-
-  client.subscribe(intervalTopicSend);
-  delay(3000);
 }
 
 void SendMeasurement() {
@@ -156,6 +172,7 @@ void SendMeasurement() {
   if (intervalPublished == true) Serial.println("Interval published.");
   else Serial.println("Failed to publish interval.");
 
+  //beginnen met wachten op antwoord van blazor ivm interval change
   myTimer.start();
 }
 
@@ -178,7 +195,7 @@ void loop() {
   }
   client.subscribe(intervalTopicSend);
   client.loop();
-  
+
   //deep sleep
   if (myTimer.done()) {
     esp_sleep_enable_timer_wakeup(updateInterval);
