@@ -8,9 +8,10 @@
 <MudLayout>
     <MudDrawer Elevation="4" Anchor="Anchor.Left" DisableOverlay="true" Variant="@DrawerVariant.Mini">
         <MudNavMenu>
-            <MudNavLink Class="mb-7 mt-5" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.WaterDrop" IconColor="Color.Info" @onclick="() => WaterTanksPage()">Home</MudNavLink>
-            <MudNavLink Class="mb-7" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.BarChart" IconColor="Color.Primary" @onclick="() => StatsPage()">Home</MudNavLink>
-            <MudNavLink Class="mb-7" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Tertiary" @onclick="() => CalendarPage()">Home</MudNavLink>
+            <MudNavLink Class="mb-7 mt-5" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.WaterDrop" IconColor="Color.Info" @onclick="() => WaterTanksPage()"></MudNavLink>
+            <MudNavLink Class="mb-7" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.BarChart" IconColor="Color.Primary" @onclick="() => StatsPage()"></MudNavLink>
+            <MudNavLink Class="mb-7" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Tertiary" @onclick="() => CalendarPage()"></MudNavLink>
+            <MudNavLink Class="mb-7" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Email" IconColor="Color.Secondary" @onclick="() => EmailPage()"></MudNavLink>
         </MudNavMenu>
     </MudDrawer>
     <MudMainContent>
@@ -35,5 +36,9 @@
     public void CalendarPage()
     {
         navManager.NavigateTo("/calendar");
+    }
+    public void EmailPage()
+    {
+        navManager.NavigateTo("/emails");
     }
 }
