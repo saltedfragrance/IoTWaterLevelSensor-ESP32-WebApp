@@ -27,6 +27,19 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "People",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_People", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WaterTanks",
                 columns: table => new
                 {
@@ -42,6 +55,26 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WaterTanks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AlarmEmails",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AlarmType = table.Column<int>(type: "int", nullable: false),
+                    PersonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AlarmEmails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AlarmEmails_People_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "People",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,7 +121,12 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "FireBeetleDevice",
                 columns: new[] { "Id", "BatteryPercentage", "DateTimeMeasured" },
-                values: new object[] { new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"), 67.0, new DateTime(2023, 8, 15, 21, 33, 55, 999, DateTimeKind.Local).AddTicks(6375) });
+                values: new object[] { new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"), 67.0, new DateTime(2023, 8, 19, 16, 1, 1, 544, DateTimeKind.Local).AddTicks(2535) });
+
+            migrationBuilder.InsertData(
+                table: "People",
+                columns: new[] { "Id", "EmailAddress", "Name" },
+                values: new object[] { new Guid("40d068a0-c84d-4171-a1fc-a637d324e8cc"), "stijn.vandekerckhove2@student.howest.be", "Stijn" });
 
             migrationBuilder.InsertData(
                 table: "WaterTanks",
@@ -96,13 +134,22 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                 values: new object[] { new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 30.0, 180, false, "Main water tank", 0.0, 133, 10 });
 
             migrationBuilder.InsertData(
+                table: "AlarmEmails",
+                columns: new[] { "Id", "AlarmType", "IsEnabled", "PersonId" },
+                values: new object[,]
+                {
+                    { new Guid("8a53c07c-7114-4d23-b64e-9d9e9ca4b053"), 0, false, new Guid("40d068a0-c84d-4171-a1fc-a637d324e8cc") },
+                    { new Guid("f3fc343c-71c7-4b2d-9c34-ee0db03a67be"), 1, false, new Guid("40d068a0-c84d-4171-a1fc-a637d324e8cc") }
+                });
+
+            migrationBuilder.InsertData(
                 table: "TankStatistics",
                 columns: new[] { "Id", "Month", "TotalWaterConsumed", "WaterTankId", "Year" },
                 values: new object[,]
                 {
-                    { new Guid("457ba7ff-04e7-4b16-9065-cbb027ffe755"), 5, 500.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 },
-                    { new Guid("4e976530-0c14-4410-ba2f-dfb34b8bb172"), 7, 200.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 },
-                    { new Guid("626748ed-5d02-4ca4-9836-a38b65660d05"), 6, 300.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 }
+                    { new Guid("49d07b12-54be-4256-b25e-95d627bea39f"), 5, 500.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 },
+                    { new Guid("a45c57c2-4b4d-4a34-8536-14b04ebb3bdb"), 6, 300.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 },
+                    { new Guid("c236054c-b46c-4048-bd18-5338d842d2be"), 7, 200.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 }
                 });
 
             migrationBuilder.InsertData(
@@ -119,6 +166,11 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AlarmEmails_PersonId",
+                table: "AlarmEmails",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TankStatistics_WaterTankId",
                 table: "TankStatistics",
                 column: "WaterTankId");
@@ -133,6 +185,9 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AlarmEmails");
+
+            migrationBuilder.DropTable(
                 name: "FireBeetleDevice");
 
             migrationBuilder.DropTable(
@@ -140,6 +195,9 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "WaterLevels");
+
+            migrationBuilder.DropTable(
+                name: "People");
 
             migrationBuilder.DropTable(
                 name: "WaterTanks");

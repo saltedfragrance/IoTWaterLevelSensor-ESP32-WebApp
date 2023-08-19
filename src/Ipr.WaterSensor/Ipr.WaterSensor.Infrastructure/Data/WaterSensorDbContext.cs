@@ -15,6 +15,8 @@ namespace Ipr.WaterSensor.Infrastructure.Data
         public DbSet<TankStatistics> TankStatistics { get; set; }
         public DbSet<WaterLevel> WaterLevels { get; set; }
         public DbSet<FireBeetle> FireBeetleDevice { get; set; }
+        public DbSet<Person> People { get; set; }
+        public DbSet<AlarmEmail> AlarmEmails { get; set; }
         public WaterSensorDbContext(DbContextOptions<WaterSensorDbContext> options) :
             base(options)
         {

@@ -11,5 +11,6 @@ namespace Ipr.WaterSensor.Core.Entities
     {
         public string Name { get; set; }
         public string EmailAddress { get; set; }
+        public List<AlarmEmail> SubscribedEmails { get; set; }
     }
 }

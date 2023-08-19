@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ipr.WaterSensor.Infrastructure.Migrations
 {
     [DbContext(typeof(WaterSensorDbContext))]
-    [Migration("20230815193356_InitialMigration")]
+    [Migration("20230819140101_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -24,6 +24,44 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Ipr.WaterSensor.Core.Entities.AlarmEmail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AlarmType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("AlarmEmails");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8a53c07c-7114-4d23-b64e-9d9e9ca4b053"),
+                            AlarmType = 0,
+                            IsEnabled = false,
+                            PersonId = new Guid("40d068a0-c84d-4171-a1fc-a637d324e8cc")
+                        },
+                        new
+                        {
+                            Id = new Guid("f3fc343c-71c7-4b2d-9c34-ee0db03a67be"),
+                            AlarmType = 1,
+                            IsEnabled = false,
+                            PersonId = new Guid("40d068a0-c84d-4171-a1fc-a637d324e8cc")
+                        });
+                });
 
             modelBuilder.Entity("Ipr.WaterSensor.Core.Entities.FireBeetle", b =>
                 {
@@ -46,7 +84,34 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         {
                             Id = new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"),
                             BatteryPercentage = 67.0,
-                            DateTimeMeasured = new DateTime(2023, 8, 15, 21, 33, 55, 999, DateTimeKind.Local).AddTicks(6375)
+                            DateTimeMeasured = new DateTime(2023, 8, 19, 16, 1, 1, 544, DateTimeKind.Local).AddTicks(2535)
+                        });
+                });
+
+            modelBuilder.Entity("Ipr.WaterSensor.Core.Entities.Person", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("People");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("40d068a0-c84d-4171-a1fc-a637d324e8cc"),
+                            EmailAddress = "stijn.vandekerckhove2@student.howest.be",
+                            Name = "Stijn"
                         });
                 });
 
@@ -77,7 +142,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4e976530-0c14-4410-ba2f-dfb34b8bb172"),
+                            Id = new Guid("c236054c-b46c-4048-bd18-5338d842d2be"),
                             Month = 7,
                             TotalWaterConsumed = 200.0,
                             WaterTankId = new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"),
@@ -85,7 +150,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("626748ed-5d02-4ca4-9836-a38b65660d05"),
+                            Id = new Guid("a45c57c2-4b4d-4a34-8536-14b04ebb3bdb"),
                             Month = 6,
                             TotalWaterConsumed = 300.0,
                             WaterTankId = new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"),
@@ -93,7 +158,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("457ba7ff-04e7-4b16-9065-cbb027ffe755"),
+                            Id = new Guid("49d07b12-54be-4256-b25e-95d627bea39f"),
                             Month = 5,
                             TotalWaterConsumed = 500.0,
                             WaterTankId = new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"),
@@ -213,6 +278,17 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Ipr.WaterSensor.Core.Entities.AlarmEmail", b =>
+                {
+                    b.HasOne("Ipr.WaterSensor.Core.Entities.Person", "Person")
+                        .WithMany("SubscribedEmails")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
             modelBuilder.Entity("Ipr.WaterSensor.Core.Entities.TankStatistics", b =>
                 {
                     b.HasOne("Ipr.WaterSensor.Core.Entities.WaterTank", "WaterTank")
@@ -233,6 +309,11 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("WaterTank");
+                });
+
+            modelBuilder.Entity("Ipr.WaterSensor.Core.Entities.Person", b =>
+                {
+                    b.Navigation("SubscribedEmails");
                 });
 
             modelBuilder.Entity("Ipr.WaterSensor.Core.Entities.WaterTank", b =>

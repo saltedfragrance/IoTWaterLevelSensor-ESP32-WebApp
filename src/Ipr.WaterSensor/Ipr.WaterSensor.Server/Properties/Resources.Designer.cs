@@ -61,7 +61,11 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dag.
+        ///   Looks up a localized string similar to Dag {{name}},
+        ///
+        ///De batterij staat laag van de regenwaterputsensor. Gelieve deze op te laden.
+        ///
+        ///Met vriendelijke groeten.
         /// </summary>
         internal static string BatteryAlarm_body {
             get {
@@ -75,6 +79,24 @@ namespace Ipr.WaterSensor.Server.Properties {
         internal static string BatteryAlarm_header {
             get {
                 return ResourceManager.GetString("BatteryAlarm_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stijn.vandekerckhove88@gmail.com.
+        /// </summary>
+        internal static string EmailFrom {
+            get {
+                return ResourceManager.GetString("EmailFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stijn.vandekerckhove88@gmail.com.
+        /// </summary>
+        internal static string EmailTo {
+            get {
+                return ResourceManager.GetString("EmailTo", resourceCulture);
             }
         }
         
@@ -156,6 +178,46 @@ namespace Ipr.WaterSensor.Server.Properties {
         internal static string MQTTUserName {
             get {
                 return ResourceManager.GetString("MQTTUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 587.
+        /// </summary>
+        internal static string SMTPPort {
+            get {
+                return ResourceManager.GetString("SMTPPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to smtp.gmail.com.
+        /// </summary>
+        internal static string SMTPServer {
+            get {
+                return ResourceManager.GetString("SMTPServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dag {{name}},
+        ///
+        ///Het niveau van de regenwaterput staat laag. Gelieve deze bij te vullen.
+        ///
+        ///Met vriendelijke groeten.
+        /// </summary>
+        internal static string WaterLevelAlarm_body {
+            get {
+                return ResourceManager.GetString("WaterLevelAlarm_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Niveau regenwaterput laag!.
+        /// </summary>
+        internal static string WaterLevelAlarm_header {
+            get {
+                return ResourceManager.GetString("WaterLevelAlarm_header", resourceCulture);
             }
         }
         

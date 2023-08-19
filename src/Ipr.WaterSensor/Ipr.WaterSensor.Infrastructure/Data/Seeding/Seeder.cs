@@ -34,6 +34,20 @@ namespace Ipr.WaterSensor.Infrastructure.Data.Seeding
             modelBuilder.Entity<FireBeetle>().HasData(
             new FireBeetle { Id = Guid.Parse("e7379d81-1f29-494e-81e2-0a313541dd5e"), DateTimeMeasured = DateTime.Now, BatteryPercentage = 67 }
             );
+
+            modelBuilder.Entity<Person>().HasData(
+            new Person
+            {
+                Id = Guid.Parse("40d068a0-c84d-4171-a1fc-a637d324e8cc"),
+                Name = "Stijn",
+                EmailAddress = "stijn.vandekerckhove2@student.howest.be"
+            }
+            );
+
+            modelBuilder.Entity<AlarmEmail>().HasData(
+            new AlarmEmail { Id = Guid.Parse("8a53c07c-7114-4d23-b64e-9d9e9ca4b053"), AlarmType = Core.Enums.EmailTypes.Batterij, IsEnabled = false, PersonId = Guid.Parse("40d068a0-c84d-4171-a1fc-a637d324e8cc") },
+            new AlarmEmail { Id = Guid.Parse("f3fc343c-71c7-4b2d-9c34-ee0db03a67be"), AlarmType = Core.Enums.EmailTypes.Waterniveau, IsEnabled = false, PersonId = Guid.Parse("40d068a0-c84d-4171-a1fc-a637d324e8cc") }
+            );
         }
     }
 }

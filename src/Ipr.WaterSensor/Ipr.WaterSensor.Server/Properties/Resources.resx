@@ -127,6 +127,12 @@ Met vriendelijke groeten</value>
   <data name="BatteryAlarm_header" xml:space="preserve">
     <value>Batterij regenwaterput laag! </value>
   </data>
+  <data name="EmailFrom" xml:space="preserve">
+    <value>stijn.vandekerckhove88@gmail.com</value>
+  </data>
+  <data name="EmailTo" xml:space="preserve">
+    <value>stijn.vandekerckhove88@gmail.com</value>
+  </data>
   <data name="MQTTBroker" xml:space="preserve">
     <value>f07b2dbeeae343528d0b9dad5a13aebf.s1.eu.hivemq.cloud</value>
   </data>
@@ -153,6 +159,12 @@ Met vriendelijke groeten</value>
   </data>
   <data name="MQTTUserName" xml:space="preserve">
     <value>watersensor_receive</value>
+  </data>
+  <data name="SMTPPort" xml:space="preserve">
+    <value>587</value>
+  </data>
+  <data name="SMTPServer" xml:space="preserve">
+    <value>smtp.gmail.com</value>
   </data>
   <data name="WaterLevelAlarm_body" xml:space="preserve">
     <value>Dag {{name}},

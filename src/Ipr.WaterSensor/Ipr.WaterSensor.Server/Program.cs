@@ -14,6 +14,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 builder.Services.AddSingleton<MQTTService>();
 builder.Services.AddSingleton<WeatherApiService>();
+builder.Services.AddSingleton<EmailService>();
 builder.Services.AddDbContextFactory<WaterSensorDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
 
 var app = builder.Build();
