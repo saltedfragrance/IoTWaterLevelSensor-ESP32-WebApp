@@ -61,6 +61,24 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dag.
+        /// </summary>
+        internal static string BatteryAlarm_body {
+            get {
+                return ResourceManager.GetString("BatteryAlarm_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Batterij regenwaterput laag! .
+        /// </summary>
+        internal static string BatteryAlarm_header {
+            get {
+                return ResourceManager.GetString("BatteryAlarm_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to f07b2dbeeae343528d0b9dad5a13aebf.s1.eu.hivemq.cloud.
         /// </summary>
         internal static string MQTTBroker {
