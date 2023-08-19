@@ -83,20 +83,11 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to stijn.vandekerckhove88@gmail.com.
+        ///   Looks up a localized string similar to regenwatersensor123@gmail.com.
         /// </summary>
         internal static string EmailFrom {
             get {
                 return ResourceManager.GetString("EmailFrom", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to stijn.vandekerckhove88@gmail.com.
-        /// </summary>
-        internal static string EmailTo {
-            get {
-                return ResourceManager.GetString("EmailTo", resourceCulture);
             }
         }
         
@@ -182,6 +173,15 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to qhpqncfvajbrhcbz.
+        /// </summary>
+        internal static string SMTPPassword {
+            get {
+                return ResourceManager.GetString("SMTPPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 587.
         /// </summary>
         internal static string SMTPPort {
@@ -196,6 +196,15 @@ namespace Ipr.WaterSensor.Server.Properties {
         internal static string SMTPServer {
             get {
                 return ResourceManager.GetString("SMTPServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to regenwatersensor123@gmail.com.
+        /// </summary>
+        internal static string SMTPUsername {
+            get {
+                return ResourceManager.GetString("SMTPUsername", resourceCulture);
             }
         }
         

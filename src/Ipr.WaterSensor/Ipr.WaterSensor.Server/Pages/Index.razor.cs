@@ -18,9 +18,12 @@ namespace Ipr.WaterSensor.Server.Pages
     public partial class Index : ComponentBase
     {
         [Inject]
+        protected IDbContextFactory<WaterSensorDbContext> DbContextFactory { get; set; } = default!;
+        [Inject]
         public MQTTService MQTTService { get; set; } = default!;
         [Inject]
-        protected IDbContextFactory<WaterSensorDbContext> DbContextFactory { get; set; } = default!;
+        public EmailService MailService { get; set; } = default!;
+        public List<Person> People { get; set; }
         public double NewUpdateIntervalValue { get; set; }
         public WaterLevel CurrentWaterLevel { get; set; }
         public double CurrentWaterPercentage { get; set; }
@@ -42,20 +45,23 @@ namespace Ipr.WaterSensor.Server.Pages
         {
             MQTTService.MqttClient.ApplicationMessageReceivedAsync += async e =>
             {
+                var topic = e.ApplicationMessage.Topic;
                 var measurement = Encoding.Default.GetString(e.ApplicationMessage.Payload);
-                if (e.ApplicationMessage.Topic == MQTTService.topicMainTank)
+                if (topic == MQTTService.topicMainTank)
                 {
                     await UpdateWaterTankLevel(measurement);
+                    await CheckForAlarms(topic);
                     await InvokeAsync(StateHasChanged);
                 }
 
-                if (e.ApplicationMessage.Topic == MQTTService.topicBatteryLevel)
+                if (topic == MQTTService.topicBatteryLevel)
                 {
                     await UpdateBatteryLevel(measurement);
+                    await CheckForAlarms(topic);
                     await InvokeAsync(StateHasChanged);
                 }
 
-                if (e.ApplicationMessage.Topic == MQTTService.topicIntervalReceive)
+                if (topic == MQTTService.topicIntervalReceive)
                 {
                     await GetData();
                     if (CurrentWaterTank.NewUpdateIntervalMinutes != 0)
@@ -66,6 +72,30 @@ namespace Ipr.WaterSensor.Server.Pages
                 }
             };
         }
+
+        private async Task CheckForAlarms(string topic)
+        {
+            if (topic == MQTTService.topicMainTank)
+            {
+                if (CurrentWaterPercentage < 30)
+                {
+                    foreach (var person in People.Where(p => p.SubscribedEmails.First(x => x.AlarmType == Core.Enums.EmailTypes.Waterniveau).IsEnabled == true))
+                    {
+                        MailService.SendMail(person.Name, person.EmailAddress, topic);
+                    }
+                }
+            }
+            if (topic == MQTTService.topicBatteryLevel)
+            {
+                if (FireBeetleDevice.BatteryPercentage < 100)
+                {
+                    foreach (var person in People.Where(p => p.SubscribedEmails.First(x => x.AlarmType == Core.Enums.EmailTypes.Batterij).IsEnabled == true))
+                    {
+                        MailService.SendMail(person.Name, person.EmailAddress, topic);
+                    }
+                }
+            }
+        }
         private async Task GetData()
         {
             using (WaterSensorDbContext context = await DbContextFactory.CreateDbContextAsync())
@@ -73,6 +103,7 @@ namespace Ipr.WaterSensor.Server.Pages
                 CurrentWaterTank = await context.WaterTanks.Include(tank => tank.WaterLevels).FirstOrDefaultAsync();
                 FireBeetleDevice = await context.FireBeetleDevice.FirstOrDefaultAsync();
                 TankStatistics = await context.TankStatistics.Where(stat => stat.WaterTankId == CurrentWaterTank.Id).FirstOrDefaultAsync();
+                People = context.People.Include(p => p.SubscribedEmails).ToList();
             }
             UpdateWaterPercentage();
         }
