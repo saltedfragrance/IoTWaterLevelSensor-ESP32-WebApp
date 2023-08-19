@@ -183,7 +183,7 @@ void callback(char *topic, byte *payload, unsigned int length) {
   }
   value[length] = '\0';
   char *end;
-  updateInterval = strtoull(value.c_str(), &end, 10);
+  updateInterval = strtoull(value.c_str(), &end, 10) * 60000000;
 
   Serial.print("Interval changed to: ");
   Serial.println(updateInterval);

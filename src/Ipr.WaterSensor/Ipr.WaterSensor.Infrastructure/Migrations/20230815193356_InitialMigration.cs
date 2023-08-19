@@ -35,7 +35,9 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                     Height = table.Column<int>(type: "int", nullable: false),
                     Radius = table.Column<int>(type: "int", nullable: false),
                     Volume = table.Column<int>(type: "int", nullable: false),
-                    UpdateIntervalMicroSeconds = table.Column<double>(type: "float", nullable: false)
+                    CurrentUpdateIntervalMinutes = table.Column<double>(type: "float", nullable: false),
+                    NewUpdateIntervalMinutes = table.Column<double>(type: "float", nullable: false),
+                    IntervalChanged = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,21 +88,21 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "FireBeetleDevice",
                 columns: new[] { "Id", "BatteryPercentage", "DateTimeMeasured" },
-                values: new object[] { new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"), 67.0, new DateTime(2023, 8, 12, 21, 35, 28, 42, DateTimeKind.Local).AddTicks(2671) });
+                values: new object[] { new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"), 67.0, new DateTime(2023, 8, 15, 21, 33, 55, 999, DateTimeKind.Local).AddTicks(6375) });
 
             migrationBuilder.InsertData(
                 table: "WaterTanks",
-                columns: new[] { "Id", "Height", "Name", "Radius", "UpdateIntervalMicroSeconds", "Volume" },
-                values: new object[] { new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 180, "Main water tank", 133, 1800000000.0, 10 });
+                columns: new[] { "Id", "CurrentUpdateIntervalMinutes", "Height", "IntervalChanged", "Name", "NewUpdateIntervalMinutes", "Radius", "Volume" },
+                values: new object[] { new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 30.0, 180, false, "Main water tank", 0.0, 133, 10 });
 
             migrationBuilder.InsertData(
                 table: "TankStatistics",
                 columns: new[] { "Id", "Month", "TotalWaterConsumed", "WaterTankId", "Year" },
                 values: new object[,]
                 {
-                    { new Guid("0194cdcd-9d5f-468a-a32f-cddeb96e19dc"), 6, 300.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 },
-                    { new Guid("8509b424-318c-4936-a971-ff6617f17abd"), 7, 200.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 },
-                    { new Guid("f10dc9d0-ae7f-433d-aa40-7bdd309e6e6b"), 5, 500.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 }
+                    { new Guid("457ba7ff-04e7-4b16-9065-cbb027ffe755"), 5, 500.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 },
+                    { new Guid("4e976530-0c14-4410-ba2f-dfb34b8bb172"), 7, 200.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 },
+                    { new Guid("626748ed-5d02-4ca4-9836-a38b65660d05"), 6, 300.0, new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"), 2023 }
                 });
 
             migrationBuilder.InsertData(

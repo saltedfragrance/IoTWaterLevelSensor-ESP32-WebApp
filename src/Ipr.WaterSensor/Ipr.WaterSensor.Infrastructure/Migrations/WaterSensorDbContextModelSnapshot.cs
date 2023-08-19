@@ -43,7 +43,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         {
                             Id = new Guid("e7379d81-1f29-494e-81e2-0a313541dd5e"),
                             BatteryPercentage = 67.0,
-                            DateTimeMeasured = new DateTime(2023, 8, 12, 21, 35, 28, 42, DateTimeKind.Local).AddTicks(2671)
+                            DateTimeMeasured = new DateTime(2023, 8, 15, 21, 33, 55, 999, DateTimeKind.Local).AddTicks(6375)
                         });
                 });
 
@@ -74,7 +74,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8509b424-318c-4936-a971-ff6617f17abd"),
+                            Id = new Guid("4e976530-0c14-4410-ba2f-dfb34b8bb172"),
                             Month = 7,
                             TotalWaterConsumed = 200.0,
                             WaterTankId = new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"),
@@ -82,7 +82,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0194cdcd-9d5f-468a-a32f-cddeb96e19dc"),
+                            Id = new Guid("626748ed-5d02-4ca4-9836-a38b65660d05"),
                             Month = 6,
                             TotalWaterConsumed = 300.0,
                             WaterTankId = new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"),
@@ -90,7 +90,7 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f10dc9d0-ae7f-433d-aa40-7bdd309e6e6b"),
+                            Id = new Guid("457ba7ff-04e7-4b16-9065-cbb027ffe755"),
                             Month = 5,
                             TotalWaterConsumed = 500.0,
                             WaterTankId = new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"),
@@ -170,18 +170,24 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<double>("CurrentUpdateIntervalMinutes")
+                        .HasColumnType("float");
+
                     b.Property<int>("Height")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IntervalChanged")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("NewUpdateIntervalMinutes")
+                        .HasColumnType("float");
+
                     b.Property<int>("Radius")
                         .HasColumnType("int");
-
-                    b.Property<double>("UpdateIntervalMicroSeconds")
-                        .HasColumnType("float");
 
                     b.Property<int>("Volume")
                         .HasColumnType("int");
@@ -194,10 +200,12 @@ namespace Ipr.WaterSensor.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("2bf39e4b-0caa-4cda-8e28-883b88fce222"),
+                            CurrentUpdateIntervalMinutes = 30.0,
                             Height = 180,
+                            IntervalChanged = false,
                             Name = "Main water tank",
+                            NewUpdateIntervalMinutes = 0.0,
                             Radius = 133,
-                            UpdateIntervalMicroSeconds = 1800000000.0,
                             Volume = 10
                         });
                 });

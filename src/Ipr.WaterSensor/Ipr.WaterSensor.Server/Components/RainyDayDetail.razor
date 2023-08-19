@@ -35,6 +35,8 @@
     private double CalculateNewPercentage()
     {
         var newPercentage = CurrentTankPercentage + ((100 / (CurrentTankVolume * 1000)) * (Convert.ToDouble(SelectedDay.Precipitation) * 36));
-        return Math.Round(newPercentage, 2);
+
+        if (newPercentage > 100) return 100;
+        else return Math.Round(newPercentage, 2);
     }
 }

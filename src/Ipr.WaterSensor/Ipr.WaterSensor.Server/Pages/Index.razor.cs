@@ -21,6 +21,7 @@ namespace Ipr.WaterSensor.Server.Pages
         public MQTTService MQTTService { get; set; } = default!;
         [Inject]
         protected IDbContextFactory<WaterSensorDbContext> DbContextFactory { get; set; } = default!;
+        public double NewUpdateIntervalValue { get; set; }
         public WaterLevel CurrentWaterLevel { get; set; }
         public double CurrentWaterPercentage { get; set; }
         public TankStatistics TankStatistics { get; set; }
@@ -32,34 +33,42 @@ namespace Ipr.WaterSensor.Server.Pages
             if (!MQTTService.ClientStarted)
             {
                 await MQTTService.StartClient();
-                MQTTService.MqttClient.ApplicationMessageReceivedAsync += e =>
-                {
-                    var measurement = Encoding.Default.GetString(e.ApplicationMessage.Payload);
-                    if (e.ApplicationMessage.Topic == MQTTService.topicMainTank)
-                    {
-                        UpdateWaterTankLevel(measurement);
-                    }
-
-                    if (e.ApplicationMessage.Topic == MQTTService.topicBatteryLevel)
-                    {
-                        UpdateBatteryLevel(measurement);
-                    }
-
-                    if (e.ApplicationMessage.Topic == MQTTService.topicIntervalReceive)
-                    {
-                        if (measurement != CurrentWaterTank.CurrentUpdateIntervalMicroSeconds.ToString())
-                        {
-                            PublishNewInterval(CurrentWaterTank.CurrentUpdateIntervalMicroSeconds);
-                        }
-                    }
-                    return Task.CompletedTask;
-                };
+                await SetupEvents();
             }
             await GetData();
         }
+
+        private async Task SetupEvents()
+        {
+            MQTTService.MqttClient.ApplicationMessageReceivedAsync += async e =>
+            {
+                var measurement = Encoding.Default.GetString(e.ApplicationMessage.Payload);
+                if (e.ApplicationMessage.Topic == MQTTService.topicMainTank)
+                {
+                    await UpdateWaterTankLevel(measurement);
+                    await InvokeAsync(StateHasChanged);
+                }
+
+                if (e.ApplicationMessage.Topic == MQTTService.topicBatteryLevel)
+                {
+                    await UpdateBatteryLevel(measurement);
+                    await InvokeAsync(StateHasChanged);
+                }
+
+                if (e.ApplicationMessage.Topic == MQTTService.topicIntervalReceive)
+                {
+                    await GetData();
+                    if (CurrentWaterTank.NewUpdateIntervalMinutes != 0)
+                    {
+                        await PublishNewInterval(CurrentWaterTank.NewUpdateIntervalMinutes);
+                    }
+                    await InvokeAsync(StateHasChanged);
+                }
+            };
+        }
         private async Task GetData()
         {
-            using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
+            using (WaterSensorDbContext context = await DbContextFactory.CreateDbContextAsync())
             {
                 CurrentWaterTank = await context.WaterTanks.Include(tank => tank.WaterLevels).FirstOrDefaultAsync();
                 FireBeetleDevice = await context.FireBeetleDevice.FirstOrDefaultAsync();
@@ -70,20 +79,22 @@ namespace Ipr.WaterSensor.Server.Pages
 
         private async Task SaveInterval()
         {
-            using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
+            using (WaterSensorDbContext context = await DbContextFactory.CreateDbContextAsync())
             {
                 var toUpdate = context.WaterTanks.FirstOrDefault(tank => tank.Id == CurrentWaterTank.Id);
-                toUpdate.CurrentUpdateIntervalMicroSeconds = CurrentWaterTank.CurrentUpdateIntervalMicroSeconds;
+                if (NewUpdateIntervalValue != CurrentWaterTank.CurrentUpdateIntervalMinutes && NewUpdateIntervalValue != 0)
+                {
+                    toUpdate.IntervalChanged = false;
+                    toUpdate.NewUpdateIntervalMinutes = NewUpdateIntervalValue;
+                }
                 await context.SaveChangesAsync();
             }
-            await GetData();
         }
 
         private async Task PublishNewInterval(double newInterval)
         {
-            string intervalMicroseconds = newInterval.ToString();
-
-            byte[] bytes = Encoding.UTF8.GetBytes(intervalMicroseconds);
+            string interval = newInterval.ToString();
+            byte[] bytes = Encoding.UTF8.GetBytes(interval);
 
             var applicationMessage = new MqttApplicationMessageBuilder()
                 .WithTopic(MQTTService.topicIntervalSend)
@@ -91,6 +102,15 @@ namespace Ipr.WaterSensor.Server.Pages
             .Build();
 
             await MQTTService.MqttClient.PublishAsync(applicationMessage, CancellationToken.None);
+
+            using (WaterSensorDbContext context = await DbContextFactory.CreateDbContextAsync())
+            {
+                var toUpdate = context.WaterTanks.FirstOrDefault(tank => tank.Id == CurrentWaterTank.Id);
+                toUpdate.IntervalChanged = false;
+                toUpdate.CurrentUpdateIntervalMinutes = newInterval;
+                toUpdate.NewUpdateIntervalMinutes = 0;
+                await context.SaveChangesAsync();
+            }
         }
 
 
@@ -115,7 +135,7 @@ namespace Ipr.WaterSensor.Server.Pages
                 WaterTankId = CurrentWaterTank.Id
             };
 
-            using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
+            using (WaterSensorDbContext context = await DbContextFactory.CreateDbContextAsync())
             {
                 await context.AddAsync(newWaterLevel);
                 await context.SaveChangesAsync();
@@ -126,7 +146,7 @@ namespace Ipr.WaterSensor.Server.Pages
 
         private async Task UpdateBatteryLevel(string measuredValue)
         {
-            using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
+            using (WaterSensorDbContext context = await DbContextFactory.CreateDbContextAsync())
             {
                 context.FireBeetleDevice.First().BatteryPercentage = Convert.ToDouble(measuredValue);
                 context.FireBeetleDevice.First().DateTimeMeasured = DateTime.Now;
@@ -151,7 +171,7 @@ namespace Ipr.WaterSensor.Server.Pages
                     Year = DateTime.Now.Year
                 };
 
-                using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
+                using (WaterSensorDbContext context = await DbContextFactory.CreateDbContextAsync())
                 {
                     await context.AddAsync(TankStatistics);
                     await context.SaveChangesAsync();
@@ -168,7 +188,7 @@ namespace Ipr.WaterSensor.Server.Pages
                     {
                         var litersConsumed = (newPercentage - previousPercentage) * 100;
 
-                        using (WaterSensorDbContext context = DbContextFactory.CreateDbContext())
+                        using (WaterSensorDbContext context = await DbContextFactory.CreateDbContextAsync())
                         {
                             TankStatistics.TotalWaterConsumed += litersConsumed;
                             await context.SaveChangesAsync();
@@ -177,14 +197,10 @@ namespace Ipr.WaterSensor.Server.Pages
                 }
             }
         }
-
-        private double GetCurrentWaterTankUpdateIntervalMinutes()
+        private DateTime GetNewUpdateInterval()
         {
-            return (CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000);
-        }
-        private async Task SetCurrentWaterTankUpdateIntervalMinutes(double newInterval)
-        {
-            CurrentWaterTank.CurrentUpdateIntervalMicroSeconds = ((newInterval * 60000000));
+            var currentInterval = CurrentWaterLevel.DateTimeMeasured.AddMinutes(CurrentWaterTank.CurrentUpdateIntervalMinutes);
+            return currentInterval.AddMinutes(CurrentWaterTank.NewUpdateIntervalMinutes);
         }
     }
 }

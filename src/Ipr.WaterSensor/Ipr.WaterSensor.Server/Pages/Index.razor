@@ -28,25 +28,33 @@
                 <div class="waterTank" style="--waterLevel:@GetWaterLevelPixels(CurrentWaterPercentage)"></div>
                 <MudChip Size="Size.Large" Icon="@Icons.Material.Filled.WaterDrop" Color="Color.Info"><b>@Math.Round((((CurrentWaterTank.Volume * 1000) / 100) * CurrentWaterPercentage), 2)L</b></MudChip>
                 <MudText Align="Align.Left"><i>Laatste update: <b>@CurrentWaterLevel.DateTimeMeasured</b></i></MudText>
-                <MudText Align="Align.Left"><i>Volgende update: <b>@CurrentWaterLevel.DateTimeMeasured.AddMinutes(CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000)</b></i></MudText>
+                @if (CurrentWaterTank.NewUpdateIntervalMinutes == 0)
+                {
+                    <MudText Align="Align.Left"><i>Volgende update: <b>@CurrentWaterLevel.DateTimeMeasured.AddMinutes(CurrentWaterTank.CurrentUpdateIntervalMinutes)</b></i></MudText>
+                }
+                else if (CurrentWaterTank.NewUpdateIntervalMinutes != 0 && CurrentWaterTank.IntervalChanged == false)
+                {
+                    <MudText Align="Align.Left"><i>Volgende update: <b>@CurrentWaterLevel.DateTimeMeasured.AddMinutes(CurrentWaterTank.CurrentUpdateIntervalMinutes)</b></i></MudText>
+                    <MudText Align="Align.Left" Color="Color.Error"><i>Nieuwe update na eerstvolgende update: <b>@GetNewUpdateInterval()</b></i></MudText>
+                }
             </MudStack>
         </MudPaper>
         <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="2">
             <MudStack Row="false" AlignItems="AlignItems.Center">
-                @if (((CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000)) > 1)
+                @if (((CurrentWaterTank.CurrentUpdateIntervalMinutes)) > 1)
                 {
-                    <MudText>Huidige update interval: <b>@((CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000)) minuten</b> <b>(@Math.Round(((CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000) / 60), 2) uur)</b></MudText>
+                    <MudText>Huidige update interval: <b>@((CurrentWaterTank.CurrentUpdateIntervalMinutes)) minuten</b> <b>(@Math.Round(((CurrentWaterTank.CurrentUpdateIntervalMinutes) / 60), 3) uur)</b></MudText>
                 }
                 else
                 {
-                    <MudText>Huidige update interval: <b>@((CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000)) minuut</b> <b>(@Math.Round(((CurrentWaterTank.CurrentUpdateIntervalMicroSeconds / 60000000) / 60), 2) uur)</b></MudText>
+                    <MudText>Huidige update interval: <b>@((CurrentWaterTank.CurrentUpdateIntervalMinutes)*60) seconden</b> <b>(@CurrentWaterTank.CurrentUpdateIntervalMinutes minuten)</b></MudText>
                 }
-                <MudForm>
-                    <MudStack Row="true" AlignItems="AlignItems.Center">
-                        <MudNumericField HideSpinButtons="true" Min="0.1" Adornment="Adornment.End" AdornmentText="minuten" Required="true" RequiredError="Interval verplicht" T="double" Label="Stel interval in" ValueChanged="(val) => SetCurrentWaterTankUpdateIntervalMinutes(val)" Value="GetCurrentWaterTankUpdateIntervalMinutes()" />
-                        <MudButton Color="Color.Success" Variant="Variant.Filled" Size="Size.Medium" Class="h-25" @onclick="SaveInterval">Bewaar</MudButton>
-                    </MudStack>
-                </MudForm>
+                    <MudForm>
+                        <MudStack Row="true" AlignItems="AlignItems.Center">
+                            <MudNumericField HideSpinButtons="true" Min="0.1" Adornment="Adornment.End" AdornmentText="minuten" Required="true" RequiredError="Interval verplicht" T="double" Label="Stel interval in" @bind-Value="NewUpdateIntervalValue" />
+                            <MudButton ButtonType="ButtonType.Submit" Color="Color.Success" Variant="Variant.Filled" Size="Size.Medium" Class="h-25" OnClick="(async () => await SaveInterval())">Bewaar</MudButton>
+                        </MudStack>
+                    </MudForm>
             </MudStack>
         </MudPaper>
     </MudStack>
