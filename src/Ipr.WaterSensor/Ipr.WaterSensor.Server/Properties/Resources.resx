@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BatteryAlarm_body" xml:space="preserve">
+    <value>Dag {{name}},
+
+De batterij staat laag van de regenwaterputsensor. Gelieve deze op te laden.
+
+Met vriendelijke groeten</value>
+  </data>
+  <data name="BatteryAlarm_header" xml:space="preserve">
+    <value>Batterij regenwaterput laag! </value>
+  </data>
+  <data name="EmailFrom" xml:space="preserve">
+    <value>regenwatersensor123@gmail.com</value>
+  </data>
+  <data name="MQTTBroker" xml:space="preserve">
+    <value>f07b2dbeeae343528d0b9dad5a13aebf.s1.eu.hivemq.cloud</value>
+  </data>
+  <data name="MQTTPassword" xml:space="preserve">
+    <value>ZEEZRrrze4235</value>
+  </data>
+  <data name="MQTTPort" xml:space="preserve">
+    <value>8883</value>
+  </data>
+  <data name="MQTTSSLCertificatePath" xml:space="preserve">
+    <value>certificates/emqxsl-ca.crt</value>
+  </data>
+  <data name="MQTTTopicBatteryLevel" xml:space="preserve">
+    <value>battery_level</value>
+  </data>
+  <data name="MQTTTopicIntervalReceive" xml:space="preserve">
+    <value>intervalReceive</value>
+  </data>
+  <data name="MQTTTopicIntervalSend" xml:space="preserve">
+    <value>intervalSend</value>
+  </data>
+  <data name="MQTTTopicMainTank" xml:space="preserve">
+    <value>watersensor_main_tank</value>
+  </data>
+  <data name="MQTTUserName" xml:space="preserve">
+    <value>watersensor_receive</value>
+  </data>
+  <data name="SMTPPassword" xml:space="preserve">
+    <value>qhpqncfvajbrhcbz</value>
+  </data>
+  <data name="SMTPPort" xml:space="preserve">
+    <value>587</value>
+  </data>
+  <data name="SMTPServer" xml:space="preserve">
+    <value>smtp.gmail.com</value>
+  </data>
+  <data name="SMTPUsername" xml:space="preserve">
+    <value>regenwatersensor123@gmail.com</value>
+  </data>
+  <data name="WaterLevelAlarm_body" xml:space="preserve">
+    <value>Dag {{name}},
+
+Het niveau van de regenwaterput staat laag. Gelieve deze bij te vullen.
+
+Met vriendelijke groeten</value>
+  </data>
+  <data name="WaterLevelAlarm_header" xml:space="preserve">
+    <value>Niveau regenwaterput laag!</value>
+  </data>
+  <data name="WeatherApiAddress" xml:space="preserve">
+    <value>https://api.open-meteo.com/v1/forecast?latitude=51.1758&amp;longitude=2.8758&amp;daily=precipitation_sum&amp;timezone=Europe%2FBerlin&amp;forecast_days=16</value>
+  </data>
+</root>

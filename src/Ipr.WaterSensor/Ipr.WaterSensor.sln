@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ipr.WaterSensor.Server", "Ipr.WaterSensor.Server\Ipr.WaterSensor.Server.csproj", "{11B71B58-9468-4ED6-B211-917D607AA8EF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5AB0756C-B699-4B89-89AF-B4875FD6E9C7} = {5AB0756C-B699-4B89-89AF-B4875FD6E9C7}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ipr.WaterSensor.Core", "Ipr.WaterSensor.Core\Ipr.WaterSensor.Core.csproj", "{5AB0756C-B699-4B89-89AF-B4875FD6E9C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ipr.WaterSensor.Infrastructure", "Ipr.WaterSensor.Infrastructure\Ipr.WaterSensor.Infrastructure.csproj", "{7C0A803E-A401-4CA6-89D8-A1FEBE244C98}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11B71B58-9468-4ED6-B211-917D607AA8EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11B71B58-9468-4ED6-B211-917D607AA8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11B71B58-9468-4ED6-B211-917D607AA8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11B71B58-9468-4ED6-B211-917D607AA8EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AB0756C-B699-4B89-89AF-B4875FD6E9C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AB0756C-B699-4B89-89AF-B4875FD6E9C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AB0756C-B699-4B89-89AF-B4875FD6E9C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AB0756C-B699-4B89-89AF-B4875FD6E9C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C0A803E-A401-4CA6-89D8-A1FEBE244C98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C0A803E-A401-4CA6-89D8-A1FEBE244C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C0A803E-A401-4CA6-89D8-A1FEBE244C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C0A803E-A401-4CA6-89D8-A1FEBE244C98}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {17169DD1-39ED-408D-9954-C94B259BE72B}
+	EndGlobalSection
+EndGlobal

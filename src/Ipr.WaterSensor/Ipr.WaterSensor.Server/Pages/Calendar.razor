@@ -1,0 +1,41 @@
+﻿@page "/calendar"
+@layout TopMenuLayout
+
+<PageTitle>Kalender</PageTitle>
+@if (Tanks != null)
+{
+    <MudPaper Class="d-flex justify-content-center mb-4" Elevation="2">
+        <MudStack Row="false" Class="mb-2">
+            <MudSelect @bind-Value="CurrentSelectedTankId" Placeholder="Selecteer een tank" AdornmentColor="Color.Primary" Label="Selecteer tank">
+                @foreach (var tank in Tanks)
+                {
+                    <MudSelectItem Value="tank.Id">@tank.Name</MudSelectItem>
+                }
+            </MudSelect>
+
+        </MudStack>
+    </MudPaper>
+}
+
+@if (RainyDays != null)
+{
+    <MudPaper Class=" mt-3 d-flex justify-content-center" Elevation="0">
+        <MudCalendar CellClicked="ToggleRainyDayDetail" ButtonVariant="Variant.Outlined" Color="Color.Surface" HighlightToday="true" Outlined="true" Items="RainyDays" MonthCellMinHeight="70" Height="50" ShowPrevNextButtons="false" ShowDay="false" ShowMonth="true" ShowWeek="false"></MudCalendar>
+    </MudPaper>
+}
+
+@if (ToggleDetail)
+{
+    <RainyDayDetail CurrentTankVolume="@Tanks.First(tank => tank.Id == CurrentSelectedTankId).Volume"
+                    CurrentTankPercentage="@LastWaterLevel.Percentage"
+                    CloseWindow="(() => ToggleDetail = false)"
+                    SelectedDay="SelectedDay"></RainyDayDetail>
+}
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        await GetTanksData();
+        RainyDays = await WeatherService.GetData();
+    }
+}

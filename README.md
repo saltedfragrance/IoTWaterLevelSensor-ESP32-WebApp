@@ -54,6 +54,3 @@
     - https://savjee.be/blog/max17043-battery-monitoring-done-right-arduino-esp32/
 - Ultrasonic sensor:
     - https://randomnerdtutorials.com/esp32-hc-sr04-ultrasonic-arduino/
-
-
-Translated with DeepL.com (free version)

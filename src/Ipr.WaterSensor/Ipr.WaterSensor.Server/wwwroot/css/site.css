@@ -1,0 +1,19 @@
+.waterTank{
+    --waterLevel: 150px;
+    height: 230px;
+    width: 150px;
+    border: 5px solid black;
+    background: url(../images/wave.png);
+    background-size: 300px 245px;
+    background-repeat: repeat-x;
+    animation: flow 5s linear infinite;
+}
+
+@keyframes flow {
+    0% {
+        background-position: -900px var(--waterLevel);
+    }
+    100% {
+        background-position: 0px var(--waterLevel);
+    }
+}

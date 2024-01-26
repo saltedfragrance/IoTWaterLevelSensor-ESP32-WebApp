@@ -1,0 +1,48 @@
+﻿@page "/statistics"
+@layout TopMenuLayout
+<PageTitle>Statistieken</PageTitle>
+
+@if (Tanks != null)
+{
+    <MudPaper Width="100%" Elevation="2" Class="d-flex justify-content-center mb-4">
+        <MudStack Row="false" Class="d-flex justify-content-center">
+            <MudPaper Elevation="0" Class="mb-2">
+                <MudSelect @bind-Value="CurrentSelectedTankId" Placeholder="Selecteer een tank" AdornmentColor="Color.Primary" Label="Selecteer tank">
+                    @foreach (var tank in Tanks)
+                    {
+                        <MudSelectItem Value="tank.Id">@tank.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudPaper>
+            <MudStack Row="true" Class="d-flex justify-content-center mb-2">
+                <MudLink Underline="Underline.None" OnClick="(() => ChangeYear(false))">&#60;</MudLink>
+                <MudText>@CurrentSelectedYear</MudText>
+                <MudLink Underline="Underline.None" OnClick="(() => ChangeYear(true))">></MudLink>
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+    @if (TankStatistics.Count() > 0 && ChartConfig != null)
+    {
+        <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="2">
+            <Chart Config="ChartConfig"></Chart>
+        </MudPaper>
+
+        <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="2">
+            <MudText>Totaal water verbruikt: <b>@(TankStatistics.Sum(x => x.TotalWaterConsumed) / 1000)m³</b></MudText>
+        </MudPaper>
+    }
+    else
+    {
+        <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="2">
+            <MudText>Nog geen statistieken beschikbaar voor dit jaar.</MudText>
+        </MudPaper>
+    }
+}
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await GetData();
+        await InitializeChart();
+    }
+}

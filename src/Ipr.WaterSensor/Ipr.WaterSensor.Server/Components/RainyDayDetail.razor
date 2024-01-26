@@ -1,0 +1,42 @@
+﻿<MudPaper data-aos="@animationName" data-aos-delay="@delay" data-aos-duration="@duration" Class="mt-3" Elevation="2">
+    <MudStack Row="false">
+        <MudPaper Class="w-100 d-flex justify-content-end" Elevation="0"><MudText Class="m-3" Align="Align.Right" Color="Color.Error"><MudButton OnClick="() => CloseWindow.InvokeAsync()">✖</MudButton></MudText></MudPaper>
+        <MudPaper Class="p-3" Elevation="0">
+            <MudText Class="mb-4"><b>@SelectedDay.Date.ToShortDateString()</b></MudText>
+            <MudText>Opgevangen regenwater: <MudChip Variant="Variant.Outlined" Color="Color.Success"><b>@(SelectedDay.Precipitation * 36)L</b></MudChip></MudText>
+            <MudStack Row="true">
+                <MudText>Nieuw Percentage regenput: <b>@CalculateNewPercentage()%</b></MudText>
+            </MudStack>
+        </MudPaper>
+    </MudStack>
+
+</MudPaper>
+
+@code{
+    private string animationName;
+    private string duration;
+    private string delay;
+
+    [Parameter]
+    public WeatherPrediction SelectedDay { get; set; }
+    [Parameter]
+    public EventCallback CloseWindow { get; set; }
+    [Parameter]
+    public double CurrentTankPercentage { get; set; }
+    [Parameter]
+    public double CurrentTankVolume { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        animationName = "fade-up";
+        duration = "4000";
+        delay = "50";
+    }
+    private double CalculateNewPercentage()
+    {
+        var newPercentage = CurrentTankPercentage + ((100 / (CurrentTankVolume * 1000)) * (Convert.ToDouble(SelectedDay.Precipitation) * 36));
+
+        if (newPercentage > 100) return 100;
+        else return Math.Round(newPercentage, 2);
+    }
+}

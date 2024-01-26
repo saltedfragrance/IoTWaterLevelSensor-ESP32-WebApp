@@ -1,0 +1,48 @@
+﻿@page "/emails"
+@layout TopMenuLayout
+
+<PageTitle>Email alarms</PageTitle>
+
+@if (NewPerson != null)
+{
+    <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="2">
+        <MudForm Model=NewPerson>
+            <MudStack Row=false>
+                <MudText>Nieuwe persoon toevoegen</MudText>
+                <MudStack Row="true">
+                    <MudTextField @bind-Value=NewPerson.Name Label="Voornaam" T="string"></MudTextField>
+                    <MudTextField @bind-Value=NewPerson.EmailAddress Label="Email" T="string"></MudTextField>
+                </MudStack>
+                <MudButton ButtonType="ButtonType.Submit" Color="Color.Success" Variant="Variant.Filled" Size="Size.Small" Class="h-25 w-50 align-self-center" OnClick=SavePerson>Bewaar</MudButton>
+            </MudStack>
+        </MudForm>
+    </MudPaper>
+}
+
+@if (People.Count > 0)
+{
+
+    @foreach (var person in People)
+    {
+        <MudPaper Class="pa-5 mt-3 d-flex justify-content-center" Elevation="2">
+            <MudStack Row=false AlignItems="AlignItems.Center">
+                <MudText>@person.Name</MudText>
+                <MudText>@person.EmailAddress</MudText>
+                <MudStack Row="true">
+                    @foreach (var alarmType in Enum.GetValues(typeof(EmailTypes)))
+                    {
+                        <MudCheckBox CheckedChanged="(async (val) => await SavePreferences(alarmType.ToString(), val, person.Id))" Checked="person.SubscribedEmails.First(x => x.AlarmType.ToString() == alarmType.ToString()).IsEnabled"  T="bool" Label=@alarmType.ToString()></MudCheckBox>
+                    }
+                </MudStack>
+            </MudStack>
+        </MudPaper>
+    }
+}
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        NewPerson = new();
+        await GetData();
+    }
+}
