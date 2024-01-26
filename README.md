@@ -1,52 +1,42 @@
-# Waterniveau IoT sensor voor regenwaterput met een informatieve web-app in Blazor
+# Water level IoT sensor for water cistern with an informative web app in Blazor
 
-## Project omschrijving
+## Instructions
+- Purchase the hardware as listed below, and assemble it in a waterproof enclosure
+- Mount the enclosure in your water cistern, the sensor having a clean line of sight to the water level
+- I used HiveMQ to communicate the sensor values to the blazor server. Be sure to adjust the login values in the resources file and the SSL certificate.
+- Start the blazor server and listen to the values communicated through MQQT. Adjust the enclosure position if values are faulty.
 
-Wij hebben 2 regenwaterputten van elk 10000 liter naast ons huis. Alles in het huis is op regenwater, ook de douche, vaatwasser en wasmachine. Dus het is van belang om de regenputten constant op een bepaald niveau te houden zodat we niet zonder water komen te zitten. Bijvullen gebeurd met een kraantje en dit gaat traag.
+## Hardware used
 
-Het plan is om een ESP32 microcontroller, uitgerust met een waterproof ultrasone sensor en een lithium batterij te bevestigen aan de zijkant van de regenwaterput. De doos waarin de apparatuur zit zal ook waterproof moeten zijn (ivm condensatie), met een kleine opening langs de onderkant waardoor de ultrasone sensor zijn metingen kan nemen. Alles is waterdicht gemaakt met silicone.
-
-De sensor meet de afstand tot het wateropvlak en stuurt deze waarde door via MQTT naar een cloud MQTT broker (HiveMQ) en dan naar de Blazor app. De meting gebeurt 1x per dag of via een manuele knop in de interface om batterij te besparen. De rest van de tijd is de microcontroller in deep sleep. De microcontroller word op via een timer gewekt, neemt zijn meting, en gaat dan terug in deep sleep. Het update interval in aan te passen via de web-app interface.
-
-## Inhoud van web-app
-
-- Een animatie van een watertank met het actuele niveau van de watertank
-- Verbruik
-    - Totaal verbruik
-    - Verbruik per maand/jaar in een grafiek of kalender
-- De lithium batterij uitlezen en dit weergeven in de interface, dmv een 'battery fuel gauge' die exact het % kan uitlezen
-- Een pagina met een kalender waarin voorspeld wordt hoeveel regenwater er zal toegevoegd worden aan de regenput.
-    - Hiervoor spreek ik een api aan die de neerslagkansen binnenhaald, en bereken ik adhv de oppervlakte van mijn dak hoeveel water er zal opgevangen worden.
-- Een pagina waar je kan abonneren op email notificaties/alarms wanneer de batterij of het waterniveau laag komt te staan
-
-## Gebruikte apparatuur
-
--  Microcontroller: DFRobot FireBeetle 2 ESP32-E IoT
-    - Heeft een Wifi module en ultralage energieconsumptie in deep sleep modus
+- Microcontroller: DFRobot FireBeetle 2 ESP32-E IoT
+    - Has a Wifi module and ultra-low power consumption in deep sleep mode
 - DFRobot Gravity I2C Battery fuel gauge
-- Ultrasone sensor: JSN-SR04T (waterdicht)
-- Li-Po Batterij 3.7V 2000mAh (connectie voorzien op microcontroller)
-- Breadboard en draden
+- Ultrasonic sensor: JSN-SR04T (waterproof)
+- Li-Po Battery 3.7V 2000mAh (connection provided on microcontroller)
+- Breadboard and wires
 
-## Gebruikte technologiën
-- c++ in de Arduino IDE op de ESP32
+## Technologies used
+- c++ in the Arduino IDE on the ESP32
 - MQTT via HiveMQ
 - c# in Blazor
 - Mudblazor
 - ChartJS
 
-## Roadmap
-- Juni: het apparaat bestellen, in elkaar zetten en testen op een goeie werking. Monteren in de regenwaterput.
-- Juli: 
-    - Een voorlopige blazor server opzetten waar ik de sensor data via MQTT kan ontvangen.
-    - De sensor data via MQTT naar de Blazor app sturen.
-    - Beginnen aan de interface in blazor
-- Augustus: De blazor interface afwerken en bugs fixen
+## Content of web-app
 
-## Bronnenlijst
+- A water tank animation showing the current level of the water tank
+- Consumption
+    - Total consumption
+    - Consumption per month/year in a graph or calendar
+- Read the lithium battery and display it in the interface, using a battery fuel gauge that can read the exact %.
+- A page with a calendar that predicts how much rainwater will be added to the cistern.
+    - For this I use an api that gets the precipitation probabilities, and I calculate from the surface of my roof how much water will be collected.
+- A page where you can subscribe to email notifications/alerts when the battery or water level gets low
+
+## Resource list.
 - DBContext in Blazor:
     - https://hovermind.com/blazor/recommended-approach-for-dbcontext-in-blazor-server.html
-- Kalender:
+- Calendar:
     - https://danheron.github.io/Heron.MudCalendar/
 - ESP32 deep sleep:
     - https://lastminuteengineers.com/esp32-deep-sleep-wakeup-sources/
@@ -54,13 +44,16 @@ De sensor meet de afstand tot het wateropvlak en stuurt deze waarde door via MQT
     - https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32c3/api-reference/system/sleep_modes.html
 - Blazor JSCharts:
     - https://www.iheartblazor.com/
-- Payload MQTT in c++ decoderen
+- Payload MQTT decoding in c++
     - https://www.youtube.com/watch?v=w0i47IA_3z8
 - SSL certification file upload in ESP32:
     - https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/
-- Credentials storen in ESP32:
+- Credentials jamming in ESP32:
     - https://randomnerdtutorials.com/esp32-save-data-permanently-preferences/
 - Battery fuel gauge:
     - https://savjee.be/blog/max17043-battery-monitoring-done-right-arduino-esp32/
-- Ultrasone sensor:
+- Ultrasonic sensor:
     - https://randomnerdtutorials.com/esp32-hc-sr04-ultrasonic-arduino/
+
+
+Translated with DeepL.com (free version)
