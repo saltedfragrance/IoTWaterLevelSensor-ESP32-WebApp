@@ -3,7 +3,8 @@
 ## Instructions
 - Purchase the hardware as listed below, and assemble it in a waterproof enclosure
 - Mount the enclosure in your water cistern, the sensor having a clean line of sight to the water level
-- I used HiveMQ to communicate the sensor values to the blazor server. Be sure to adjust the login values in the resources file and the SSL certificate.
+- I used HiveMQ to communicate the sensor values to the blazor server. Be sure to adjust the login values in the resources.resx file in the WaterSensor.Server project and the SSL certificate in the certificates folder (if your MQQT service deems it necessary to use one, if not, remove that code checking for a certificate).
+- In the Infrastructure project, there's some seeding for the database. Migrate it using EF.
 - Start the blazor server and listen to the values communicated through MQQT. Adjust the enclosure position if values are faulty.
 
 ## Hardware used
@@ -23,7 +24,6 @@
 - ChartJS
 
 ## Content of web-app
-
 - A water tank animation showing the current level of the water tank
 - Consumption
     - Total consumption
