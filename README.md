@@ -2,9 +2,9 @@
 
 ## Instructions
 - Purchase the hardware as listed below, and assemble it in a waterproof enclosure
-- Mount the enclosure in your water cistern, the sensor having a clean line of sight to the water level
+- Mount the enclosure in your water cistern, the sensor having a clear line of sight to the water level
 - I used HiveMQ to communicate the sensor values to the blazor server. Be sure to adjust the login values in the resources.resx file in the WaterSensor.Server project and the SSL certificate in the certificates folder, and the data folder for the Arduino project (if your MQQT service deems it necessary to use one, if not, remove that code checking for a certificate).
-- I used the preferences memory in order to save the MQQT, WiFi credentials for the Arduino sketch. Be sure to update those using a seperate Arduino sketch.
+- I used the preferences memory in order to save the MQQT, WiFi credentials for the Arduino sketch. Be sure to update those variables using a seperate Arduino sketch.
 - In the Infrastructure project, there's some seeding for the database. Migrate it using EF.
 - Start the blazor server and listen to the values communicated through MQQT. Adjust the enclosure position if values are faulty.
 
