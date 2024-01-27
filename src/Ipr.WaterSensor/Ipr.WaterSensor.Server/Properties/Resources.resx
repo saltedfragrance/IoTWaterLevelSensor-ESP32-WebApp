@@ -130,19 +130,19 @@ Kind regards</value>
     <value>Battery cistern low!</value>
   </data>
   <data name="EmailFrom" xml:space="preserve">
-    <value />
+    <value>regenwatersensor123@gmail.com</value>
   </data>
   <data name="MQTTBroker" xml:space="preserve">
-    <value />
+    <value>f07b2dbeeae343528d0b9dad5a13aebf.s1.eu.hivemq.cloud</value>
   </data>
   <data name="MQTTPassword" xml:space="preserve">
-    <value />
+    <value>ZEEZRrrze4235</value>
   </data>
   <data name="MQTTPort" xml:space="preserve">
-    <value />
+    <value>8883</value>
   </data>
   <data name="MQTTSSLCertificatePath" xml:space="preserve">
-    <value />
+    <value>certificates/emqsxl-ca.crt</value>
   </data>
   <data name="MQTTTopicBatteryLevel" xml:space="preserve">
     <value>battery_level</value>
@@ -160,16 +160,16 @@ Kind regards</value>
     <value>watersensor_receive</value>
   </data>
   <data name="SMTPPassword" xml:space="preserve">
-    <value />
+    <value>qhpncfvajbrhcbz</value>
   </data>
   <data name="SMTPPort" xml:space="preserve">
-    <value />
+    <value>587</value>
   </data>
   <data name="SMTPServer" xml:space="preserve">
-    <value />
+    <value>smtp.gmail.com</value>
   </data>
   <data name="SMTPUsername" xml:space="preserve">
-    <value />
+    <value>regenwatersensor123@gmail.com</value>
   </data>
   <data name="WaterLevelAlarm_body" xml:space="preserve">
     <value>Hi {{name}},

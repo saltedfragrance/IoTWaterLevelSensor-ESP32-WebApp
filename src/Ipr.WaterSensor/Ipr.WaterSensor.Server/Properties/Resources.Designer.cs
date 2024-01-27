@@ -85,7 +85,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to regenwatersensor123@gmail.com.
         /// </summary>
         internal static string EmailFrom {
             get {
@@ -94,7 +94,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to f07b2dbeeae343528d0b9dad5a13aebf.s1.eu.hivemq.cloud.
         /// </summary>
         internal static string MQTTBroker {
             get {
@@ -103,7 +103,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to ZEEZRrrze4235.
         /// </summary>
         internal static string MQTTPassword {
             get {
@@ -112,7 +112,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 8883.
         /// </summary>
         internal static string MQTTPort {
             get {
@@ -121,7 +121,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to certificates/emqsxl-ca.crt.
         /// </summary>
         internal static string MQTTSSLCertificatePath {
             get {
@@ -175,7 +175,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to qhpncfvajbrhcbz.
         /// </summary>
         internal static string SMTPPassword {
             get {
@@ -184,7 +184,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 587.
         /// </summary>
         internal static string SMTPPort {
             get {
@@ -193,7 +193,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to smtp.gmail.com.
         /// </summary>
         internal static string SMTPServer {
             get {
@@ -202,7 +202,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to regenwatersensor123@gmail.com.
         /// </summary>
         internal static string SMTPUsername {
             get {
