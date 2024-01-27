@@ -61,11 +61,13 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dag {{name}},
+        ///   Looks up a localized string similar to Hi {{name}},
         ///
-        ///De batterij staat laag van de regenwaterputsensor. Gelieve deze op te laden.
+        ///The battery is low on the cistern sensor. Please recharge it.
         ///
-        ///Met vriendelijke groeten.
+        ///
+        ///
+        ///Kind regards.
         /// </summary>
         internal static string BatteryAlarm_body {
             get {
@@ -74,7 +76,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Batterij regenwaterput laag! .
+        ///   Looks up a localized string similar to Battery cistern low!.
         /// </summary>
         internal static string BatteryAlarm_header {
             get {
@@ -83,7 +85,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to regenwatersensor123@gmail.com.
+        ///   Looks up a localized string similar to .
         /// </summary>
         internal static string EmailFrom {
             get {
@@ -92,7 +94,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to f07b2dbeeae343528d0b9dad5a13aebf.s1.eu.hivemq.cloud.
+        ///   Looks up a localized string similar to .
         /// </summary>
         internal static string MQTTBroker {
             get {
@@ -101,7 +103,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ZEEZRrrze4235.
+        ///   Looks up a localized string similar to .
         /// </summary>
         internal static string MQTTPassword {
             get {
@@ -110,7 +112,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 8883.
+        ///   Looks up a localized string similar to .
         /// </summary>
         internal static string MQTTPort {
             get {
@@ -119,7 +121,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to certificates/emqxsl-ca.crt.
+        ///   Looks up a localized string similar to .
         /// </summary>
         internal static string MQTTSSLCertificatePath {
             get {
@@ -173,7 +175,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to qhpqncfvajbrhcbz.
+        ///   Looks up a localized string similar to .
         /// </summary>
         internal static string SMTPPassword {
             get {
@@ -182,7 +184,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 587.
+        ///   Looks up a localized string similar to .
         /// </summary>
         internal static string SMTPPort {
             get {
@@ -191,7 +193,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to smtp.gmail.com.
+        ///   Looks up a localized string similar to .
         /// </summary>
         internal static string SMTPServer {
             get {
@@ -200,7 +202,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to regenwatersensor123@gmail.com.
+        ///   Looks up a localized string similar to .
         /// </summary>
         internal static string SMTPUsername {
             get {
@@ -209,11 +211,13 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dag {{name}},
+        ///   Looks up a localized string similar to Hi {{name}},
         ///
-        ///Het niveau van de regenwaterput staat laag. Gelieve deze bij te vullen.
+        ///The battery is low on the cistern sensor. Please recharge it.
         ///
-        ///Met vriendelijke groeten.
+        ///
+        ///
+        ///Kind regards.
         /// </summary>
         internal static string WaterLevelAlarm_body {
             get {
@@ -222,7 +226,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveau regenwaterput laag!.
+        ///   Looks up a localized string similar to Level cistern low!.
         /// </summary>
         internal static string WaterLevelAlarm_header {
             get {

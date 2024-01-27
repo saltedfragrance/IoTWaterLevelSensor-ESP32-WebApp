@@ -118,29 +118,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BatteryAlarm_body" xml:space="preserve">
-    <value>Dag {{name}},
+    <value>Hi {{name}},
 
-De batterij staat laag van de regenwaterputsensor. Gelieve deze op te laden.
+The battery is low on the cistern sensor. Please recharge it.
 
-Met vriendelijke groeten</value>
+
+
+Kind regards</value>
   </data>
   <data name="BatteryAlarm_header" xml:space="preserve">
-    <value>Batterij regenwaterput laag! </value>
+    <value>Battery cistern low!</value>
   </data>
   <data name="EmailFrom" xml:space="preserve">
-    <value>regenwatersensor123@gmail.com</value>
+    <value />
   </data>
   <data name="MQTTBroker" xml:space="preserve">
-    <value>f07b2dbeeae343528d0b9dad5a13aebf.s1.eu.hivemq.cloud</value>
+    <value />
   </data>
   <data name="MQTTPassword" xml:space="preserve">
-    <value>ZEEZRrrze4235</value>
+    <value />
   </data>
   <data name="MQTTPort" xml:space="preserve">
-    <value>8883</value>
+    <value />
   </data>
   <data name="MQTTSSLCertificatePath" xml:space="preserve">
-    <value>certificates/emqxsl-ca.crt</value>
+    <value />
   </data>
   <data name="MQTTTopicBatteryLevel" xml:space="preserve">
     <value>battery_level</value>
@@ -158,26 +160,28 @@ Met vriendelijke groeten</value>
     <value>watersensor_receive</value>
   </data>
   <data name="SMTPPassword" xml:space="preserve">
-    <value>qhpqncfvajbrhcbz</value>
+    <value />
   </data>
   <data name="SMTPPort" xml:space="preserve">
-    <value>587</value>
+    <value />
   </data>
   <data name="SMTPServer" xml:space="preserve">
-    <value>smtp.gmail.com</value>
+    <value />
   </data>
   <data name="SMTPUsername" xml:space="preserve">
-    <value>regenwatersensor123@gmail.com</value>
+    <value />
   </data>
   <data name="WaterLevelAlarm_body" xml:space="preserve">
-    <value>Dag {{name}},
+    <value>Hi {{name}},
 
-Het niveau van de regenwaterput staat laag. Gelieve deze bij te vullen.
+The battery is low on the cistern sensor. Please recharge it.
 
-Met vriendelijke groeten</value>
+
+
+Kind regards</value>
   </data>
   <data name="WaterLevelAlarm_header" xml:space="preserve">
-    <value>Niveau regenwaterput laag!</value>
+    <value>Level cistern low!</value>
   </data>
   <data name="WeatherApiAddress" xml:space="preserve">
     <value>https://api.open-meteo.com/v1/forecast?latitude=51.1758&amp;longitude=2.8758&amp;daily=precipitation_sum&amp;timezone=Europe%2FBerlin&amp;forecast_days=16</value>
