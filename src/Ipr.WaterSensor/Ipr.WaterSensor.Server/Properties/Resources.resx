@@ -142,7 +142,7 @@ Kind regards</value>
     <value>8883</value>
   </data>
   <data name="MQTTSSLCertificatePath" xml:space="preserve">
-    <value>certificates/emqsxl-ca.crt</value>
+    <value>certificates/emqxsl-ca.crt</value>
   </data>
   <data name="MQTTTopicBatteryLevel" xml:space="preserve">
     <value>battery_level</value>

@@ -121,7 +121,7 @@ namespace Ipr.WaterSensor.Server.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to certificates/emqsxl-ca.crt.
+        ///   Looks up a localized string similar to certificates/emqxsl-ca.crt.
         /// </summary>
         internal static string MQTTSSLCertificatePath {
             get {
