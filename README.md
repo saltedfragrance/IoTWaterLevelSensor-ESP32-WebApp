@@ -33,6 +33,17 @@
 - A page with a calendar that predicts how much rainwater will be added to the cistern.
     - For this I use an api that gets the precipitation probabilities, and I calculate from the surface of my roof how much water will be collected.
 - A page where you can subscribe to email notifications/alerts when the battery or water level gets low
+- 
+## Screenshots
+- Main page
+  ![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen1.png)
+- Statistics page
+  ![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen2.png)
+- Calendar page
+  ![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen3.png)
+- Alerts page
+  ![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen4.png)
+  
 
 ## Resource list.
 - DBContext in Blazor:
