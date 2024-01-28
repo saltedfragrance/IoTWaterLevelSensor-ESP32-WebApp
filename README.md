@@ -36,13 +36,16 @@
 - 
 ## Screenshots
 - Main page
-  ![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen1.png)
+![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen1.png)
+
 - Statistics page
-  ![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen2.png)
+![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen2.png)
+
 - Calendar page
-  ![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen3.png)
+![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen3.png)
+
 - Alerts page
-  ![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen4.png)
+![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen4.png)
   
 
 ## Resource list.
