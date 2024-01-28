@@ -35,16 +35,16 @@
 - A page where you can subscribe to email notifications/alerts when the battery or water level gets low
 - 
 ## Screenshots
-- Main page
+###  Main page
 ![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen1.png)
 
-- Statistics page
+### Statistics page
 ![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen2.png)
 
-- Calendar page
+### Calendar page
 ![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen3.png)
 
-- Alerts page
+### Alerts page
 ![Screenshot](https://github.com/vandekerckhovestijn/IoTWaterLevelSensor-ESP32-WebApp/blob/master/screenshots/screen4.png)
   
 
